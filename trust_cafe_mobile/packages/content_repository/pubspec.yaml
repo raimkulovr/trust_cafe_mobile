@@ -1,0 +1,24 @@
+name: content_repository
+description: "Package which manages the content domain."
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  domain_models:
+    path: ../domain_models
+  equatable: ^2.0.5
+  key_value_storage:
+    path: ../key_value_storage
+  trust_cafe_api:
+    path: ../trust_cafe_api
+  rxdart: ^0.27.7
+  translator: ^1.0.0
+  html: any
+  flutter_cache_manager: ^3.3.2
+
+dev_dependencies:
+  very_good_analysis: ^5.1.0
+  flutter_lints: ^4.0.0

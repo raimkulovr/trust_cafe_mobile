@@ -1,0 +1,42 @@
+name: text_editor
+publish_to: none
+
+environment:
+  sdk: '>=3.5.1 <4.0.0'
+
+dependencies:
+  bloc: ^8.1.4
+  component_library:
+    path: ../../component_library
+  equatable: ^2.0.5
+  flutter_bloc: ^8.1.5
+  flutter:
+    sdk: flutter
+  domain_models:
+    path: ../../domain_models
+  content_repository:
+    path: ../../content_repository
+  user_repository:
+    path: ../../user_repository
+  url_launcher: ^6.3.0
+  html: ^0.15.4
+  flutter_quill: ^10.8.1
+  flutter_quill_extensions: ^10.8.1
+  vsc_quill_delta_to_html: ^1.0.5
+  flutter_quill_delta_from_html: ^1.4.0
+  path: any
+  cached_network_image: ^3.4.1
+  image: ^4.3.0
+  uuid: ^4.4.2
+  branches:
+    path: ../branches
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: 1.0.3
+  test: ^1.24.9
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true

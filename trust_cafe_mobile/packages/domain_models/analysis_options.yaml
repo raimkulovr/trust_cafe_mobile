@@ -1,0 +1,5 @@
+include: package:lints/strict.yaml
+
+linter:
+  rules:
+    - prefer_const_constructors

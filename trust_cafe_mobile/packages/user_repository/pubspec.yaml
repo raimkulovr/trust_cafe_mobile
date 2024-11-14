@@ -1,0 +1,21 @@
+name: user_repository
+description: "Package which manages the user domain."
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  domain_models:
+    path: ../domain_models
+  equatable: ^2.0.5
+  flutter_secure_storage: ^9.0.0
+  key_value_storage:
+    path: ../key_value_storage
+  rxdart: ^0.27.7
+  trust_cafe_api:
+    path: ../trust_cafe_api
+
+dev_dependencies:
+  very_good_analysis: ^5.1.0
