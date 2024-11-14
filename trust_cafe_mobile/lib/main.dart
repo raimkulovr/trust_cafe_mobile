@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'package:bloc/bloc.dart';
 import 'package:routemaster/routemaster.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:key_value_storage/key_value_storage.dart';
 import 'package:content_repository/content_repository.dart';
@@ -17,15 +16,10 @@ import 'package:flutter_quill_extensions/flutter_quill_extensions.dart';
 import 'bloc_observer.dart';
 import 'routing_table.dart';
 
-const _telemetryPreference = 'enable_telemetry';
-
 void main() async {
   FlutterQuillExtensions.useSuperClipboardPlugin();
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = const AppBlocObserver();
-
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final bool enableTelemetry = prefs.getBool(_telemetryPreference) ?? false;
 
   final noSqlStorage = KeyValueStorage();
   final userLocalStorage = UserLocalStorage(noSqlStorage);
@@ -45,17 +39,7 @@ void main() async {
     imageSizeThresholdInitial: imageSizeThresholdInitial,
   );
 
-  if (enableTelemetry){
-    runZonedGuarded(
-          () {
-            runApp(app);
-          },
-          (error, stack) {
-          },
-    );
-  } else {
-    runApp(app);
-  }
+  runApp(app);
 }
 
 class TrustCafe extends StatefulWidget {
