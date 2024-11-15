@@ -159,9 +159,6 @@ class _TextEditorViewState extends State<TextEditorView> {
         ConverterOptions(multiLineParagraph: false,)
     );
 
-    /// NOTE: There are alterations to local copy of the
-    /// vsc_quill_delta_to_html package, allowing me to preserve both height and
-    /// width. It doesn't preserve height by default.
     final convertedDelta = converter.convert();
     return convertedDelta;
   }

@@ -59,9 +59,6 @@ dependency_overrides:
   webview_flutter_android: 3.16.1
   chewie: ^1.8.1
   win32: ^5.5.3
-#  file_picker:
-#    git:
-#      url: https://github.com/melWiss/flutter_file_picker.git
 
 dev_dependencies:
   flutter_test:
