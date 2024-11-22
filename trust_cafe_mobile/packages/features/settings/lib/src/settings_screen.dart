@@ -118,7 +118,7 @@ class _SignOutButton extends StatelessWidget {
                 onPressed: () async {
                   context.read<SettingsCubit>().signOut();
                 },
-                child: const Text('Sign out'))
+                child: const Text('Log out'))
             : const SizedBox();
       },);
   }
