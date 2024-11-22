@@ -22,9 +22,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   {
     _registerEventsHandler();
     add(const HomeStarted());
-    notificationTimer = Timer.periodic(const Duration(minutes: 5),
-            (Timer t) => add(const HomeNotificationsRefreshed(silent: true)));
-
   }
 
   final AppUser appUser;
@@ -107,7 +104,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   @override
   Future<void> close() {
-    notificationTimer.cancel();
     return super.close();
   }
 }
