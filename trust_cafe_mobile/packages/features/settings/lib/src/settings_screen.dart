@@ -40,14 +40,8 @@ class SettingsView extends StatelessWidget {
     _ImageSizeThresholdSetter(),
     _IgnoreListManager(),
     _FeedbackFormLauncher(),
+    _ClearCacheButton(),
     Divider(),
-    Row(
-      children: [
-        _ClearNonImageCacheButton(),
-        Spacer(),
-        _EmptyImageCacheButton(),
-      ]
-    ),
     _SignOutButton(),
     _CurrentVersion(),
     SizedBox(height: 56,),
@@ -158,7 +152,7 @@ class _EmptyImageCacheButtonState extends State<_EmptyImageCacheButton> {
   Widget build(BuildContext context) {
     return isDeletingCache
         ? const LinearProgressIndicator()
-        : ElevatedButton(
+        : TextButton(
             onPressed: _onCacheDeleted,
             child: const Text('Clear image cache'));
   }
@@ -426,9 +420,41 @@ class _ClearNonImageCacheButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return TextButton(
         onPressed: context.read<SettingsCubit>().clearNonImageCache,
-        child: const Text('Clear non-image cache'));
+        child: const Text('Clear data cache'));
+  }
+}
+
+class _ClearCacheButton extends StatelessWidget {
+  const _ClearCacheButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+        onPressed: (){
+          showDialog(context: context, builder: (_) {
+            return BlocProvider.value(
+              value: context.read<SettingsCubit>(),
+              child: const AlertDialog(
+                title: Text('Clear cache options'),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Select the type of cache you want to clear. Removing cached data can free up storage and improve app performance. This action won\'t delete personal data or settings.'
+                    ),
+                  ],
+                ),
+                actions: [
+                  _EmptyImageCacheButton(),
+                  _ClearNonImageCacheButton(),
+                ],
+              ),
+            );
+          },);
+        },
+        child: const Text('Clear cache')
+    );
   }
 }
 
