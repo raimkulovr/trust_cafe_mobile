@@ -277,6 +277,10 @@ class _ExpandableHtmlWidgetState extends State<ExpandableHtmlWidget> {
             continue;
           }
         }
+
+        //Ignore whitespace between images
+        if(node.text?.trim().isEmpty ?? false) continue;
+
         if (imageGroup.isNotEmpty) {
           if (imageGroup.length > 1) {
             // Group only if there are multiple images
