@@ -12,7 +12,7 @@ import 'package:user_repository/user_repository.dart';
 
 import 'widgets/notification_widget.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({
     required this.userRepository,
     required this.contentRepository,
@@ -27,25 +27,20 @@ class HomeScreen extends StatefulWidget {
   final OnAuthenticationRequestedCallback onAuthenticationRequest;
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
   Widget build(BuildContext context) {
     return _CallbackProvider(
-      getAppUser: ()=>widget.appUser,
-      onAuthenticationRequest: widget.onAuthenticationRequest,
+      getAppUser: ()=>appUser,
+      onAuthenticationRequest: onAuthenticationRequest,
       child: MultiRepositoryProvider(
         providers: [
-          RepositoryProvider.value(value: widget.userRepository),
-          RepositoryProvider.value(value: widget.contentRepository),
+          RepositoryProvider.value(value: userRepository),
+          RepositoryProvider.value(value: contentRepository),
         ],
         child: BlocProvider<HomeBloc>(
           create: (_) => HomeBloc(
-              contentRepository: widget.contentRepository,
-              userRepository: widget.userRepository,
-              appUser: widget.appUser,
+              contentRepository: contentRepository,
+              userRepository: userRepository,
+              appUser: appUser,
           ),
           child: const HomeView(),
         ),

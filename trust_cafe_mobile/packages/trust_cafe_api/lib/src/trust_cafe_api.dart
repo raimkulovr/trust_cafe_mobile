@@ -32,10 +32,9 @@ class TrustCafeApi {
 
           late final String accessToken;
 
-          final refreshCompleter = _refreshCompleter;
-          if (refreshCompleter != null) {
+          if (_refreshCompleter != null) {
             try {
-              accessToken = await refreshCompleter.future;
+              accessToken = await _refreshCompleter!.future;
             } catch (e) {
               rethrow;
             }
@@ -55,14 +54,9 @@ class TrustCafeApi {
               }
               _refreshCompleter?.complete(accessToken);
             } catch (e) {
-              try {
-                _refreshCompleter = Completer<String>();
-                accessToken = getGuestToken();
-                _refreshCompleter?.complete(accessToken);
-              } catch (e) {
-                _refreshCompleter?.completeError(ServerNotAvailableTCApiException());
-                throw ServerNotAvailableTCApiException();
-              }
+              _refreshCompleter = Completer<String>();
+              accessToken = getGuestToken();
+              _refreshCompleter?.complete(accessToken);
             } finally {
               _refreshCompleter = null;
             }
