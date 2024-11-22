@@ -189,23 +189,24 @@ class UserprofilePopupView extends StatelessWidget {
                           final updatedAt = DateTime.fromMillisecondsSinceEpoch(user.updatedAt);
                           showDialog(context: context, builder: (context) {
                             return AlertDialog(
-                              title: Text('Statistics'),
+                              title: const Text('Statistics'),
                               content: SingleChildScrollView(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Tooltip(
+                                        message: 'When was the last post or comment created\n${'$updatedAt'.split('.').first}',
+                                        child: Text('Updated: ${TimeAgo.timeAgo(updatedAt)}')),
+                                    const SizedBox(height: 8,),
+                                    Tooltip(
                                         message: '$createdAt'.split('.').first,
                                         child: Text('Joined: ${TimeAgo.timeAgo(createdAt)}')),
-                                    Tooltip(
-                                        message: 'When was the last post or comment created\n${'$updatedAt'.split('.').first}',
-                                        child: Text('Last activity: ${TimeAgo.timeAgo(updatedAt)}')),
-                                    if(user.statistics.commentCount!=null) Text('Comment count: ${user.statistics.commentCount}'),
-                                    if(user.statistics.postCount!=null) Text('Post count: ${user.statistics.postCount}'),
+                                    if(user.statistics.commentCount!=null) Text('Comments: ${user.statistics.commentCount}'),
+                                    if(user.statistics.postCount!=null) Text('Posts: ${user.statistics.postCount}'),
+                                    if(user.statistics.totalProfilePosts!=null) Text('Profile posts: ${user.statistics.totalProfilePosts}'),
                                     // if(user.statistics.revisionCount!=null) Text('Revision count: ${user.statistics.revisionCount}'),
                                     if(user.statistics.subwikiCount!=null) Text('Branches created: ${user.statistics.subwikiCount}'),
-                                    if(user.statistics.totalFollowers!=null) Text('Total followers: ${user.statistics.totalFollowers}'),
-                                    if(user.statistics.totalProfilePosts!=null) Text('Total profile posts: ${user.statistics.totalProfilePosts}'),
+                                    if(user.statistics.totalFollowers!=null) Text('Followers: ${user.statistics.totalFollowers}'),
                                   ],),
                               ),
                             );
