@@ -71,8 +71,8 @@ class _ExpandableHtmlWidgetState extends State<ExpandableHtmlWidget> {
       );
     }
 
-    this.htmlContent = replaceSameLevelImagesWithGroups(htmlContent);
     this.images = images;
+    this.htmlContent = images.isNotEmpty ? wrapNeighboringImages(htmlContent) : htmlContent;
 
     if(images.isNotEmpty) WidgetsBinding.instance.addPostFrameCallback((_) => updateWidgetHeight());
   }
@@ -128,7 +128,7 @@ class _ExpandableHtmlWidgetState extends State<ExpandableHtmlWidget> {
 
   Widget? widgetBuilder (Element e, {bool withImageCallback = false}) {
     //Handle image groups
-    if(e.localName == 'div' && e.className=='image-group'){
+    if(e.localName == 'images'){
       return HtmlWidgetCarousel(
         itemCount: e.children.length,
         tagGetter: (index) => images[e.children[index].localName],
@@ -262,47 +262,57 @@ class _ExpandableHtmlWidgetState extends State<ExpandableHtmlWidget> {
     );
   }
 
-  Document replaceSameLevelImagesWithGroups(Document document) {
-    void wrapImageGroup(List<Element> images) {
-      if (images.isEmpty) return;
+  Document wrapNeighboringImages(Document document) {
+    document.body?.querySelectorAll('*').forEach((pElement) {
+      List<Node> newChildren = [];
+      List<Node> imageGroup = [];
 
-      var groupContainer = Element.tag('div');
-      groupContainer.classes.add('image-group');
-
-      var parent = images.first.parent;
-      if (parent != null) {
-        parent.insertBefore(groupContainer, images.first);
-        for (var img in images) {
-          img.remove();
-          groupContainer.append(img);
-        }
-      }
-    }
-
-    void groupImagesInParent(Element parent) {
-      List<Element> currentGroup = [];
-
-      for (var child in parent.children.toList()) {
-        if (child.localName?.startsWith('img') ?? false) {
-          currentGroup.add(child);
-        } else {
-          if (currentGroup.length>1) {
-            wrapImageGroup(currentGroup);
-            currentGroup.clear();
+      for (var node in List<Node>.from(pElement.nodes)) {
+        if(node is Element) {
+          if(node.isImage){
+            imageGroup.add(node);
+            continue;
+          } else if (node.localName == 'a' && node.children.any((node) => node.isImage,)){
+            imageGroup.addAll(node.children.where((node) => node.isImage,));
+            continue;
           }
         }
+        if (imageGroup.isNotEmpty) {
+          if (imageGroup.length > 1) {
+            // Group only if there are multiple images
+            newChildren.add(createWrapper(imageGroup));
+          } else {
+            // Add single image as-is
+            newChildren.add(imageGroup.first);
+          }
+          imageGroup = [];
+        }
+        newChildren.add(node);
       }
 
-      if (currentGroup.length>1) {
-        wrapImageGroup(currentGroup);
+      // Finalize the last group if any images are left
+      if (imageGroup.isNotEmpty) {
+        if (imageGroup.length > 1) {
+          newChildren.add(createWrapper(imageGroup));
+        } else {
+          newChildren.add(imageGroup.first);
+        }
       }
-    }
 
-    for (var element in document.body!.querySelectorAll('*')) {
-      groupImagesInParent(element);
-    }
+      // Replace the original children with the modified ones
+      pElement.nodes
+        ..clear()
+        ..addAll(newChildren);
+    });
 
     return document;
+  }
+
+// Helper function to create a wrapper for a list of nodes
+  Element createWrapper(List<Node> nodes) {
+    var wrapper = Element.tag('images');
+    wrapper.nodes.addAll(nodes);
+    return wrapper;
   }
 
   @override
@@ -334,38 +344,35 @@ class _HtmlWidgetCarouselState extends State<HtmlWidgetCarousel> {
 
   @override
   Widget build(BuildContext context) {
+    final maxSize = MediaQuery.sizeOf(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 2),
-          child: ListenableBuilder(
-            listenable: page,
-            builder: (context, child) {
-              return Text('${page.value+1}/${widget.itemCount}',
-                  style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.grey));
-            },),
+        ListenableBuilder(
+          listenable: page,
+          builder: (context, child) {
+            return Text('${page.value+1}/${widget.itemCount}',
+                style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.grey));
+          },),
+        SizedBox(
+          width: maxSize.width,
+          child: CarouselSlider.builder(
+              itemCount: widget.itemCount,
+              itemBuilder: (context, index, realIndex) {
+                final tag = widget.tagGetter(index);
+                return tag!=null
+                    ? widget.imageBuilder(tag)
+                    : const SizedBox();
+              },
+              options: CarouselOptions(
+                height: maxSize.height*0.4,
+                disableCenter: true,
+                enableInfiniteScroll: false,
+                enlargeCenterPage: false,
+                viewportFraction: 1,
+                onPageChanged: (index, reason) => page.value=index,
+              )),
         ),
-        CarouselSlider.builder(
-            itemCount: widget.itemCount,
-            itemBuilder: (context, index, realIndex) {
-              final tag = widget.tagGetter(index);
-              return tag!=null
-                  ? Padding(
-                      padding: const EdgeInsets.fromLTRB(2, 0, 2, 0),
-                      // padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      child: widget.imageBuilder(tag),
-                    )
-                  : const SizedBox();
-            },
-            options: CarouselOptions(
-              aspectRatio: 5/3,
-              disableCenter: true,
-              enableInfiniteScroll: false,
-              enlargeCenterPage: false,
-              viewportFraction: 1,
-              onPageChanged: (index, reason) => page.value=index,
-            )),
       ],
     );
   }
@@ -375,4 +382,8 @@ class _HtmlWidgetCarouselState extends State<HtmlWidgetCarousel> {
     page.dispose();
     super.dispose();
   }
+}
+
+extension ElementIsImage on Element{
+  bool get isImage => localName?.startsWith('img') ?? false;
 }
