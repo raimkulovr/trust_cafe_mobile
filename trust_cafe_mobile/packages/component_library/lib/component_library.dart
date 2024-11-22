@@ -31,3 +31,4 @@ export 'src/following_button.dart';
 export 'src/go_to_button.dart';
 export 'src/entity_not_found.dart';
 export 'src/router/paths.dart';
+export 'src/archive_dialog.dart';

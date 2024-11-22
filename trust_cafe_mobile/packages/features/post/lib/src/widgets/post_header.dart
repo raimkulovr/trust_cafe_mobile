@@ -247,29 +247,12 @@ class PostHeader extends StatelessWidget {
                               : showDialog(
                                   context: context,
                                   useRootNavigator: true,
-                                  builder: (dialogContext) => AlertDialog(
-                                    title: const Text('Archive this post?'), //TODO: l10n
-                                    content: SingleChildScrollView(
-                                        child: Column(
-                                          children: [
-                                            Text('${postAuthor.fullName} says:'),
-                                            ExpandableHtmlWidget(html: state.postText, isExpanded: true, imageSizeThreshold: RepositoryProvider.of<UserRepository>(context).imageSizeThreshold,),
-                                          ],
-                                        )),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () {
-                                            Navigator.of(dialogContext).pop();
-                                          },
-                                          child: const Text('Cancel')),
-                                      TextButton(
-                                          onPressed: () {
-                                            cubit.archivePost();
-                                            Navigator.of(dialogContext).pop();
-                                          },
-                                          child: const Text('Archive', style: TextStyle(color: Colors.red),)
-                                      ),
-                                    ],
+                                  builder: (dialogContext) => ArchiveDialog(
+                                    type: ArchiveType.post,
+                                    contentText: state.postText,
+                                    author: state.post.data.createdByUser,
+                                    onArchive: cubit.archivePost,
+                                    imageSizeThreshold: RepositoryProvider.of<UserRepository>(context).imageSizeThreshold,
                                   ),
                                 ),
                         ),

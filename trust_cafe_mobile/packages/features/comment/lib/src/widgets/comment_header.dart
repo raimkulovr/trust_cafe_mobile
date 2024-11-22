@@ -127,30 +127,12 @@ class CommentHeader extends StatelessWidget {
                               ? cubit.restoreComment()
                               : showDialog(
                             context: context,
-                            builder: (dialogContext) => AlertDialog(
-                              title: const Text('Archive this comment?'), //TODO: l10n
-                              content: SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    Text('${author.fullName} says:'),
-                                    ExpandableHtmlWidget(html: state.commentText,
-                                      imageSizeThreshold: RepositoryProvider.of<UserRepository>(context).imageSizeThreshold,),
-                                  ],
-                                ),
-                              ),
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.of(dialogContext).pop();
-                                    },
-                                    child: const Text('Cancel')),
-                                TextButton(
-                                    onPressed: () {
-                                      cubit.archiveComment();
-                                      Navigator.of(dialogContext).pop();
-                                    },
-                                    child: const Text('Archive', style: TextStyle(color: Colors.red),))
-                              ],
+                            builder: (dialogContext) => ArchiveDialog(
+                              type: ArchiveType.comment,
+                              contentText: state.commentText,
+                              author: author,
+                              onArchive: cubit.archiveComment,
+                              imageSizeThreshold: RepositoryProvider.of<UserRepository>(context).imageSizeThreshold,
                             ),
                           ),
                         ),
