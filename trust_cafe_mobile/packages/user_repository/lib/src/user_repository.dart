@@ -155,10 +155,12 @@ class UserRepository {
       if (tokenData.contains(null)){
         return null;
       } else {
-        return ApiTokenData(
+        final apiTokenData = ApiTokenData(
           accessToken: tokenData[0]!,
           refreshToken: tokenData[1]!,
           accessTimeOut: int.tryParse(tokenData[2]!) ?? 0,);
+        _apiTokenDataSubject.add(apiTokenData);
+        return apiTokenData;
       }
     } else {
       return _apiTokenDataSubject.value;
@@ -193,9 +195,12 @@ class UserRepository {
   }
 
   Future<void> signOut() async {
-    await _api.signOut();
+    final tokenData = await getTokenData();
     await _localStorage.clearStorage();
     await clearAuthCredentials();
+    if(tokenData!=null){
+      await _api.signOut(tokenData.accessToken);
+    }
   }
 
   Future<void> upsertDraftQuickSave(String encodedDraft) async {

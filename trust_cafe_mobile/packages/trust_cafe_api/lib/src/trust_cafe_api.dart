@@ -319,9 +319,11 @@ class TrustCafeApi {
     return comment;
   }
 
-  Future<void> signOut() async {
+  Future<void> signOut(String accessToken) async {
     final url = _urlBuilder.signOutUrl();
-    await _dio.delete(url);
+    final dio = Dio(BaseOptions(headers: {'Authorization': 'Bearer $accessToken'}))
+      ..interceptors.add(LogInterceptor(request: false, responseHeader: false, logPrint: (object) => log(object.toString()),));
+    await dio.delete(url);
   }
 
   Future<void> archivePost({
