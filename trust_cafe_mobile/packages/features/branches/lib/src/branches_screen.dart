@@ -82,18 +82,17 @@ class BranchesDropdown extends StatelessWidget {
                     )
                   )
                 ),
-                clearButtonProps: ClearButtonProps(
-                  isVisible: true,
-                  padding: const EdgeInsets.all(0),
-                  onPressed: () {
-                    onSubwikiSelected(null);
-                    context.read<BranchesCubit>().setSelectedItem(null);
-                  },
+                suffixProps: DropdownSuffixProps(
+                  clearButtonProps: ClearButtonProps(
+                    isVisible: true,
+                    padding: const EdgeInsets.all(0),
+                  ),
                 ),
                 compareFn: (item1, item2) => item1==item2,
-                items: state.subwikiList,
-                dropdownDecoratorProps: DropDownDecoratorProps(
-                  dropdownSearchDecoration: InputDecoration(
+
+                items: (filter, loadProps) => state.subwikiList,
+                decoratorProps: DropDownDecoratorProps(
+                    decoration: InputDecoration(
                     labelText: "Select branch",
                     helperText: branch?.description,
                     helperMaxLines: 3,

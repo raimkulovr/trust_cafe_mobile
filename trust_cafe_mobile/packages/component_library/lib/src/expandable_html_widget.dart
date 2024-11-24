@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/material.dart' hide Element;
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:html/dom.dart' hide Text;
-import 'package:flutter/material.dart' hide Element;
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 import '../component_library.dart';
 
