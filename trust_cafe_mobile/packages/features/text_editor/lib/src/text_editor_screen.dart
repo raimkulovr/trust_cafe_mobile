@@ -17,6 +17,7 @@ import 'package:html/dom.dart' as dom;
 
 import 'draft_manager/draft_manager_screen.dart';
 import 'text_editor_cubit.dart';
+import 'widgets/stage_switch_button.dart';
 
 final widthHeightRegExp = RegExp(r'width:\s*([\d.]+)\s*;\s*height:\s*([\d.]+)\s*;?');
 const maxTextLength = 2000;
@@ -318,7 +319,7 @@ class _TextEditorViewState extends State<TextEditorView> {
                             ),
                           state.processingImageUpload
                               ? const SizedBox()
-                              : TextButton(
+                              : StageSwitchButton(
                                   onPressed: widget.initialText==null &&
                                       state.stage == TextEditorStage.preview &&
                                       state.characterAmount>maxTextLength
@@ -333,9 +334,7 @@ class _TextEditorViewState extends State<TextEditorView> {
                                       cubit.setStagePreview(text, maxWidth, widget.isEditing);
                                     }
                                   },
-                                  child: Text(state.stage == TextEditorStage.preview
-                                      ? 'Publish'
-                                      : 'Next'),
+                                  isPublish: state.stage == TextEditorStage.preview,
                                 ),
                         ],
                       );
