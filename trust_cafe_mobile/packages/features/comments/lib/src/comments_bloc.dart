@@ -183,9 +183,8 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
           commentText: commentText,
           blurLabel: event.blurLabel,
       );
-      if(state.commentList!=null) {
-        emit(state.copyWith(commentList: Wrapped.value([...state.commentList!, newComment]), creatingNewComment: false));
-      }
+
+      emit(state.copyWith(commentList: Wrapped.value([...?state.commentList, newComment]), creatingNewComment: false));
     } catch (e) {
       emit(state.copyWithNewCommentError(e));
       emit(state.copyWithNewCommentError(null));
