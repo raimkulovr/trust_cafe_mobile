@@ -24,12 +24,7 @@ class TabContainerView extends StatelessWidget {
             activeIcon: TrunkIcon(height: 24, color: colorScheme.primary,),
           ),
           if(appUser.isNotGuest) BottomNavigationBarItem(
-            //TODO: replace with adequate icon
-            icon: Transform.rotate(
-              alignment: Alignment.center,
-              angle: 90 * (3.1415926535897932 / 180),
-              child: const Icon(Icons.more_vert),
-            ),
+            icon: const Icon(Icons.groups),
           ),
           const BottomNavigationBarItem(
             icon: Icon(
