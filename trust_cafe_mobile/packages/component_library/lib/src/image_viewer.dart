@@ -195,10 +195,19 @@ class ImageViewer extends StatefulWidget {
 }
 
 class _ImageViewerState extends State<ImageViewer> {
-
+  late final double? sizeInMegabytes;
+  late final double imageMaxSize;
   bool canSaveImage = true;
   bool ignoreEnforcedSize = false;
-  late final MediaQueryData mediaQuery = MediaQuery.of(context);
+  MediaQueryData get mediaQuery => MediaQuery.of(context);
+  String get sizeInMegabytesString => '(${sizeInMegabytes?.toStringAsFixed(2)} MB)';
+
+  @override
+  void initState() {
+    sizeInMegabytes = widget.sizeInBytes!=null ? widget.sizeInBytes! / (1024 * 1024) : null;
+    imageMaxSize = widget.imageSizeThreshold ?? 20;
+    super.initState();
+  }
 
   void _showImageSavedSnackBar() {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -230,17 +239,14 @@ class _ImageViewerState extends State<ImageViewer> {
 
   @override
   Widget build(BuildContext context) {
-    final sizeInMegabytes = widget.sizeInBytes!=null ? widget.sizeInBytes! / (1024 * 1024) : null;
-    return widget.imageSizeThreshold!=null &&
-           sizeInMegabytes!=null &&
-           (!ignoreEnforcedSize && sizeInMegabytes>widget.imageSizeThreshold!)
+    return sizeInMegabytes!=null && (!ignoreEnforcedSize && sizeInMegabytes!>imageMaxSize)
         ? switch(widget.type){
             ImageType.post => SizedBox(
                 height: 20,
                 child: TcmTextButton(
                     icon: Icons.image,
                     onTap: _downloadImage,
-                    text: 'Tap to load image (${sizeInMegabytes.toStringAsFixed(2)} MB)')),
+                    text: 'Tap to load image $sizeInMegabytesString')),
             ImageType.profile => Builder(
               builder: (context) {
                 final colorScheme = Theme.of(context).colorScheme;
@@ -253,23 +259,22 @@ class _ImageViewerState extends State<ImageViewer> {
             ),
             ImageType.spider => InkWell(
               onTap: _downloadImage,
-              child: SizedBox(
-                height: 56,
-                width: 56,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+              child: Container(
+                constraints: BoxConstraints(maxHeight: 56, maxWidth: 56),
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(Icons.download),
                       FittedBox(
-                        child: Text('(${sizeInMegabytes.toStringAsFixed(2)} MB)'),
+                        child: Text(sizeInMegabytesString),
                       )
                     ],
                   ),
                 ),
               ),
-            ),
+              ),
           }
         : _buildImage();
   }
