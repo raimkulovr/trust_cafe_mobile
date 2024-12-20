@@ -100,7 +100,6 @@ class _ExpandableHtmlWidgetState extends State<ExpandableHtmlWidget> {
 
   Widget _buildImage(ImageData tag, {
     bool withImageCallback = false,
-    required BoxFit imageFit,
     required ImageType imageType,
   }){
     final imageTags = images.values.toList();
@@ -109,7 +108,7 @@ class _ExpandableHtmlWidgetState extends State<ExpandableHtmlWidget> {
       child: isHttpBasedUrl(tag.src)
         ? AsyncImageViewer(tag,
             index: index,
-            imageFit: imageFit,
+            imageFit: BoxFit.fitHeight,
             type: imageType,
             imageProvider: imageProvider!,
             onImageRendered: withImageCallback ? updateWidgetHeight : null,
@@ -117,7 +116,7 @@ class _ExpandableHtmlWidgetState extends State<ExpandableHtmlWidget> {
           )
         : ImageViewer(tag,
             index: index,
-            imageFit: imageFit,
+            imageFit: BoxFit.fitHeight,
             type: imageType,
             imageProvider: imageProvider!,
             onImageRendered: withImageCallback ? updateWidgetHeight : null,
@@ -132,7 +131,7 @@ class _ExpandableHtmlWidgetState extends State<ExpandableHtmlWidget> {
       return HtmlWidgetCarousel(
         itemCount: e.children.length,
         tagGetter: (index) => images[e.children[index].localName],
-        imageBuilder: (tag) => _buildImage(tag, withImageCallback: withImageCallback, imageFit: BoxFit.cover, imageType: ImageType.spider),
+        imageBuilder: (tag) => _buildImage(tag, withImageCallback: withImageCallback, imageType: ImageType.spider),
       );
     }
 
@@ -141,7 +140,7 @@ class _ExpandableHtmlWidgetState extends State<ExpandableHtmlWidget> {
     if(tag!=null){
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 2),
-        child: _buildImage(tag, withImageCallback: withImageCallback, imageFit: BoxFit.cover, imageType: ImageType.post),
+        child: _buildImage(tag, withImageCallback: withImageCallback, imageType: ImageType.post),
       );
     } else if(e.localName == 'img'){
       final src = e.attributes['src'] ?? '';
@@ -344,20 +343,14 @@ class HtmlWidgetCarousel extends StatefulWidget {
 
 class _HtmlWidgetCarouselState extends State<HtmlWidgetCarousel> {
 
-  final ValueNotifier<int> page = ValueNotifier(0);
+  final ValueNotifier<int?> page = ValueNotifier(0);
 
   @override
   Widget build(BuildContext context) {
     final maxSize = MediaQuery.sizeOf(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+    return Stack(
+      alignment: Alignment.topRight,
       children: [
-        ListenableBuilder(
-          listenable: page,
-          builder: (context, child) {
-            return Text('${page.value+1}/${widget.itemCount}',
-                style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.grey));
-          },),
         SizedBox(
           width: maxSize.width,
           child: CarouselSlider.builder(
@@ -374,8 +367,26 @@ class _HtmlWidgetCarouselState extends State<HtmlWidgetCarousel> {
                 enableInfiniteScroll: false,
                 enlargeCenterPage: false,
                 viewportFraction: 1,
-                onPageChanged: (index, reason) => page.value=index,
+                onScrolled: (value) {
+                  if(value?.toInt() != value){
+                    page.value = null;
+                  } else {
+                    page.value = value?.toInt();
+                  }
+                },
               )),
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(4,0,4,0),
+          child: ListenableBuilder(
+            listenable: page,
+            builder: (context, child) {
+              final pageInt = page.value;
+              if (pageInt==null) return const SizedBox();
+
+              return Text('${pageInt+1}/${widget.itemCount}',
+                  style: const TextStyle(fontWeight: FontWeight.w500, color: Colors.grey));
+            },),
         ),
       ],
     );
