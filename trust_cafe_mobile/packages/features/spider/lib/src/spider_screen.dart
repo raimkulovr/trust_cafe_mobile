@@ -147,14 +147,12 @@ class SpiderView extends StatelessWidget {
                               width: 200,
                               child: FittedBox(
                                   alignment: Alignment.centerLeft,
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: AsyncImageViewer(imageData,
-                                          type: ImageType.spider,
-                                          imageSizeThreshold: imageSizeThreshold,
-                                          imageProvider: CustomImageProvider(
-                                            type: ImageType.spider,
-                                            images: [imageData],))))),
+                                  child: AsyncImageViewer(imageData,
+                                      type: ImageType.spider,
+                                      imageSizeThreshold: imageSizeThreshold,
+                                      imageProvider: CustomImageProvider(
+                                        type: ImageType.spider,
+                                        images: [imageData],)))),
                         ),
                       const SizedBox(height: 8),
                       launchableLink(urlData.url, maxLines: 1),
