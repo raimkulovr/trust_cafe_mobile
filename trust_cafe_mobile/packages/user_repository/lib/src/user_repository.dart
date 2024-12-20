@@ -141,7 +141,7 @@ class UserRepository {
 
   Future<void> upsertAppUser(AppUser user) async {
     await _localStorage.upsertAppUser(user.toCacheModel);
-    if(user!=_userSubject.value) _userSubject.add(user);
+    if(user!=_userSubject.valueOrNull) _userSubject.add(user);
   }
 
   Future<void> upsertImageSizeThreshold(double? newThreshold) async {
