@@ -95,6 +95,10 @@ class AsyncImageViewer extends StatelessWidget {
     imageSizeThreshold: imageSizeThreshold,
   );
 
+  Widget get progressIndicator => type==ImageType.post
+      ? const LinearProgressIndicator()
+      : const ComponentProgressIndicator();
+
   @override
   Widget build(BuildContext context) {
     final cacheManager = DefaultCacheManager();
@@ -147,15 +151,11 @@ class AsyncImageViewer extends StatelessWidget {
                 );
               }
 
-              return type==ImageType.post
-                  ? const LinearProgressIndicator()
-                  : const ComponentProgressIndicator();
+              return progressIndicator;
             },
           );
         }
-        return type==ImageType.post
-            ? const LinearProgressIndicator()
-            : const ComponentProgressIndicator();
+        return progressIndicator;
       },
     );
   }
@@ -200,7 +200,7 @@ class _ImageViewerState extends State<ImageViewer> {
   bool canSaveImage = true;
   bool ignoreEnforcedSize = false;
   MediaQueryData get mediaQuery => MediaQuery.of(context);
-  String get sizeInMegabytesString => '(${sizeInMegabytes?.toStringAsFixed(2)} MB)';
+  String get sizeInMegabytesString => '${sizeInMegabytes?.toStringAsFixed(2)} MB';
 
   @override
   void initState() {
@@ -246,7 +246,7 @@ class _ImageViewerState extends State<ImageViewer> {
                 child: TcmTextButton(
                     icon: Icons.image,
                     onTap: _downloadImage,
-                    text: 'Tap to load image $sizeInMegabytesString')),
+                    text: 'Tap to load image ($sizeInMegabytesString)')),
             ImageType.profile => Builder(
               builder: (context) {
                 final colorScheme = Theme.of(context).colorScheme;
@@ -261,17 +261,16 @@ class _ImageViewerState extends State<ImageViewer> {
               onTap: _downloadImage,
               child: Container(
                 constraints: BoxConstraints(maxHeight: 56, maxWidth: 56),
+                alignment: Alignment.center,
                 padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.download),
-                      FittedBox(
-                        child: Text(sizeInMegabytesString),
-                      )
-                    ],
-                  ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.download),
+                    FittedBox(
+                      child: Text(sizeInMegabytesString),
+                    )
+                  ],
                 ),
               ),
               ),
@@ -333,38 +332,29 @@ class _ImageViewerState extends State<ImageViewer> {
        *   Tap to load it from {domain name}"example.com"
        **********************************/
 
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-          //purposefully maxWidth
-          maxHeight: widget.tag.height!=null ? double.infinity : maxWidth,
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Image(
-            width: widget.tag.width,
-            height: widget.tag.height,
-            image: imageProvider,
-            alignment: Alignment.topLeft,
-            fit: widget.imageFit,
-            loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) {
-                if(widget.onImageRendered!=null) {
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    widget.onImageRendered!();
-                  });
-                }
-                canSaveImage = true;
-                AsyncImageViewer.existingImagesCache.add(widget.tag.src);
-                return child;
-              } else {
-                canSaveImage = false;
-                return ImageProgressIndicator(progress: loadingProgress, showText: widget.type!=ImageType.profile);
-              }
-            },
-            errorBuilder: (context, error, stackTrace)
-              => _ErrorWidget(type: widget.type, onErrorCallback: widget.onErrorCallback,),
-          ),
-        ),
+      child: Image(
+        width: widget.tag.width,
+        height: widget.tag.height,
+        image: imageProvider,
+        alignment: Alignment.center,
+        fit: widget.imageFit,
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) {
+            if(widget.onImageRendered!=null) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                widget.onImageRendered!();
+              });
+            }
+            canSaveImage = true;
+            AsyncImageViewer.existingImagesCache.add(widget.tag.src);
+            return child;
+          } else {
+            canSaveImage = false;
+            return ImageProgressIndicator(progress: loadingProgress, showText: widget.type!=ImageType.profile);
+          }
+        },
+        errorBuilder: (context, error, stackTrace)
+        => _ErrorWidget(type: widget.type, onErrorCallback: widget.onErrorCallback,),
       ),
     );
   }

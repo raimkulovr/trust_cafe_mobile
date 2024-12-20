@@ -54,7 +54,7 @@ class ImageProgressIndicator extends ComponentProgressIndicator {
             CircularProgressIndicator(value: bytesLoaded / bytesExpected),
             if(showText)
               ...[const SizedBox(height: 8.0),
-                  Text('$loadedText (${percentage.toStringAsFixed(2)}%)')],
+                  Text(loadedText)],
           ],
         ),
       );
