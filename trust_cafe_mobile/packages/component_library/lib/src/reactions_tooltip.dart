@@ -1,4 +1,4 @@
-import 'package:component_library/src/utility_popup_menu_widget.dart';
+import 'package:component_library/src/utility/utility_popup_menu_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../component_library.dart';

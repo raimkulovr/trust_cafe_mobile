@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'copy_manager.dart';
+import 'utility/copy_manager.dart';
 
 class CopyPopupMenuItem extends PopupMenuItem<void Function()> {
   CopyPopupMenuItem(String content, {super.key})

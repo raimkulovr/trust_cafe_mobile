@@ -1,4 +1,4 @@
-import 'package:component_library/src/number_to_text_extension.dart';
+import 'package:component_library/src/utility/number_to_text_extension.dart';
 import 'package:domain_models/domain_models.dart';
 import 'package:flutter/material.dart';
 
