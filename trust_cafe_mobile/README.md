@@ -1,9 +1,4 @@
-# trust_cafe_mobile
-
-A new Flutter project.
-
 ## Getting Started
-
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
@@ -16,7 +11,10 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 ## Build generated files
-run `dart run build_runner build`
-in these directoires:
-`packages\trust_cafe_api`
-`packages\key_value_storage`
+Run `dart run build_runner build`
+in these directories:
+- `packages\trust_cafe_api`
+- `packages\key_value_storage`
+
+## Auth flow
+See https://gitlab.com/raimkulovr/tcm/-/wikis/home/auth-flow for the authentication flow breakdown
