@@ -2,7 +2,9 @@ name: changes
 publish_to: none
 
 environment:
-  sdk: '>=3.5.0 <4.0.0'
+  sdk: '>=3.6.0 <4.0.0'
+
+resolution: workspace
 
 dependencies:
   bloc: ^8.1.4
