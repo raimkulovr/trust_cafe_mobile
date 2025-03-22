@@ -54,7 +54,7 @@ class DraftManagerCubit extends Cubit<DraftManagerState> {
   void quickLoadDraft() async {
     if(state.quickSaveSlot==null) return;
     _controller.clear();
-    _controller.setContents(Document.fromJson(state.quickSaveSlot!).toDelta());
+    _controller.replaceText(0, 1, Document.fromJson(state.quickSaveSlot!).toDelta(), null);
   }
 
   void quickSaveDraft() async {
@@ -76,7 +76,7 @@ class DraftManagerCubit extends Cubit<DraftManagerState> {
   void loadDraft(String id){
     if(state.draftList==null) return;
     _controller.clear();
-    _controller.setContents(Document.fromJson(state.draftList!.firstWhere((e) => e.id==id,).document).toDelta());
+    _controller.replaceText(0, 1, Document.fromJson(state.draftList!.firstWhere((e) => e.id==id,).document).toDelta(), null);
   }
 
   void deleteDraft(String id) async {

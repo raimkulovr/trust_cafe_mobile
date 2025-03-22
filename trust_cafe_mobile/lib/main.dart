@@ -1,23 +1,21 @@
 import 'dart:async';
-import 'package:component_library/component_library.dart';
 import 'package:flutter/material.dart';
 
 import 'package:bloc/bloc.dart';
 import 'package:routemaster/routemaster.dart';
+import 'package:flutter_quill/flutter_quill.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'package:key_value_storage/key_value_storage.dart';
+import 'package:component_library/component_library.dart';
 import 'package:content_repository/content_repository.dart';
+import 'package:key_value_storage/key_value_storage.dart';
 import 'package:trust_cafe_api/trust_cafe_api.dart';
 import 'package:user_repository/user_repository.dart';
-
-
-import 'package:flutter_quill_extensions/flutter_quill_extensions.dart';
 
 import 'bloc_observer.dart';
 import 'routing_table.dart';
 
 void main() async {
-  FlutterQuillExtensions.useSuperClipboardPlugin();
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = const AppBlocObserver();
 
@@ -140,6 +138,12 @@ class _TrustCafeState extends State<TrustCafe> {
             )),
             routerDelegate: routerDelegate,
             routeInformationParser: const RoutemasterParser(),
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              FlutterQuillLocalizations.delegate,
+            ],
           );
         },
       ),

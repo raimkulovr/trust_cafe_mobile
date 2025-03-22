@@ -1,6 +1,5 @@
-import 'package:super_clipboard/super_clipboard.dart';
-
-import 'extract_text_from_html.dart';
+import 'package:component_library/src/utility/extract_text_from_html.dart';
+import 'package:flutter/services.dart';
 
 enum CopyManagerType{
   html,
@@ -9,17 +8,8 @@ enum CopyManagerType{
 
 abstract class CopyManager{
   static Future<void> copy(String content, {required CopyManagerType type}) async {
-    final clipboard = SystemClipboard.instance;
-    if (clipboard == null) {
-      return; // Clipboard API is not supported on this platform.
-    }
-    final item = DataWriterItem();
-    if(type == CopyManagerType.html){
-      item.add(Formats.htmlText(content));
-      item.add(Formats.plainText(extractPlainText(content)));
-    } else if(type == CopyManagerType.text){
-      item.add(Formats.plainText(content));
-    }
-    await clipboard.write([item]);
+    return await Clipboard.setData(ClipboardData(
+        text: type == CopyManagerType.text ? content : extractPlainText(content),
+    ));
   }
 }

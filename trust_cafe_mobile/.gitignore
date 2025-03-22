@@ -42,10 +42,13 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+# FLutter Quill generated
+/android/app/.cxx
 
 *.bkp
 *.dtmp
 /packages/features/*/build/
+/packages/component_library/build/
 pubspec.lock
 */pubspec.lock
 *.g.dart

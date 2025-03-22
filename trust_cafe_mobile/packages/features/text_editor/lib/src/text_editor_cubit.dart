@@ -7,15 +7,13 @@ import 'package:content_repository/content_repository.dart';
 import 'package:domain_models/domain_models.dart';
 import 'package:equatable/equatable.dart';
 import 'package:html/dom.dart';
+import 'package:text_editor/src/regular_expressions/regular_expressions.dart';
 import 'package:text_editor/src/typedefs.dart';
 import 'package:image/image.dart' as img;
 
 part 'text_editor_state.dart';
 
 const _debugDisableUploadAndPublish = false;
-
-final preHtmlExp = RegExp(r'(https?:\/\/[^\s<"]+)');
-final postHtmlExp = RegExp(r'(https?:\/\/[^\s]+[^\s.);\]}<"])');
 
 const supportedImageResizeFormats = [
   'jpg',

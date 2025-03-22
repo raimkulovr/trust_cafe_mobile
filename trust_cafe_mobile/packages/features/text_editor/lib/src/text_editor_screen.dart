@@ -1,23 +1,23 @@
 import 'dart:async';
-import 'dart:developer';
-
-import 'package:component_library/component_library.dart';
-import 'package:content_repository/content_repository.dart';
 import 'package:flutter/material.dart';
+
+import 'package:html/dom.dart' as dom;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_quill/quill_delta.dart';
-import 'package:flutter_quill_extensions/flutter_quill_extensions.dart';
-import 'package:text_editor/src/typedefs.dart';
-import 'package:text_editor/src/widgets/preview_stage.dart';
-import 'package:user_repository/user_repository.dart';
-import 'package:vsc_quill_delta_to_html/vsc_quill_delta_to_html.dart';
 import 'package:flutter_quill_delta_from_html/flutter_quill_delta_from_html.dart';
-import 'package:html/dom.dart' as dom;
+import 'package:vsc_quill_delta_to_html/vsc_quill_delta_to_html.dart';
 
-import 'draft_manager/draft_manager_screen.dart';
+import 'package:content_repository/content_repository.dart';
+import 'package:user_repository/user_repository.dart';
+
+import 'typedefs.dart';
 import 'text_editor_cubit.dart';
+import 'widgets/preview_stage.dart';
 import 'widgets/stage_switch_button.dart';
+import 'draft_manager/draft_manager_screen.dart';
+import 'quill_config/editor_config.dart';
+import 'quill_config/toolbar_config.dart';
 
 final widthHeightRegExp = RegExp(r'width:\s*([\d.]+)\s*;\s*height:\s*([\d.]+)\s*;?');
 const maxTextLength = 2000;
@@ -125,7 +125,6 @@ class _TextEditorViewState extends State<TextEditorView> {
     final converter = HtmlToDelta(replaceNormalNewLinesToBr: true, trimText: false);
     _controller = QuillController(
       document: widget.initialText!=null ? Document.fromDelta(converter.convert(transformHtml(widget.initialText!))) : Document(),
-      editorFocusNode: _focusNode,
       selection: const TextSelection.collapsed(offset: 0)
     );
 
@@ -351,69 +350,15 @@ class _TextEditorViewState extends State<TextEditorView> {
                     children: [
                       QuillSimpleToolbar(
                         controller: _controller,
-                        configurations: QuillSimpleToolbarConfigurations(
-                            showUndo: false,
-                            showRedo: false,
-                            showFontFamily: false,
-                            showFontSize: false,
-                            showSubscript: false,
-                            showSuperscript: false,
-                            showColorButton: false,
-                            showBackgroundColorButton: false,
-                            showListNumbers: false,
-                            showListBullets: false,
-                            showListCheck: false,
-                            showCodeBlock: false,
-                            showInlineCode: false,
-                            showIndent: false,
-                            showStrikeThrough: false,
-                            showQuote: widget.destination==TextEditorDestination.post,
-                            showHeaderStyle: widget.destination==TextEditorDestination.post,
-                            headerStyleType: HeaderStyleType.original,
-                            buttonOptions: const QuillSimpleToolbarButtonOptions(
-                              selectHeaderStyleDropdownButton: QuillToolbarSelectHeaderStyleDropdownButtonOptions(
-                                  attributes: [
-                                    Attribute.h1,
-                                    Attribute.h2,
-                                    Attribute.h3,
-                                    Attribute.h4,
-                                    Attribute.h5,
-                                    Attribute.h6,
-                                    Attribute.header,
-                                  ]
-                              ),
-                            ),
-                            embedButtons: FlutterQuillEmbeds.toolbarButtons(
-                              videoButtonOptions: null,
-                              cameraButtonOptions: null,
-                              tableButtonOptions: null,
-                              imageButtonOptions: QuillToolbarImageButtonOptions(
-                                linkRegExp: postHtmlExp,
-                              ),
-                            )
-                        ),
+                        config: getToolbarConfig(destination: widget.destination, focusNode: _focusNode),
                       ),
                       Divider(
                         color: colorScheme.onSurface,
                       ),
                       QuillEditor.basic(
                         controller: _controller,
-                        configurations: QuillEditorConfigurations(
-                          placeholder: 'What\'s on your mind?',
-                          padding: const EdgeInsets.all(8),
-                          keyboardAppearance: colorScheme.brightness,
-                          magnifierConfiguration: TextMagnifierConfiguration.disabled,
-                          embedBuilders: [
-                            QuillEditorImageEmbedBuilder(
-                              configurations: QuillEditorImageEmbedConfigurations(
-                                imageProviderBuilder: (context, url)=>getImageProviderByImageSource(url),
-                                imageErrorWidgetBuilder: (context, error, stackTrace) {
-                                  return const Icon(Icons.error, color: Colors.red, size: 56,);
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
+                        focusNode: _focusNode,
+                        config: getEditorConfig(colorScheme: colorScheme),
                       ),
                     ],
                   ),
