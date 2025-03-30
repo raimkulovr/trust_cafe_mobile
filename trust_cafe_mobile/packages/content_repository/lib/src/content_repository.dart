@@ -18,6 +18,7 @@ import 'mappers/cache_to_domain.dart';
 import 'mappers/domain_to_cache.dart';
 import 'mappers/remote_to_domain.dart';
 import 'mappers/translation_to_cache.dart';
+import 'mappers/reaction_map_to_domain.dart';
 
 class ContentRepository {
   ContentRepository({
@@ -399,7 +400,7 @@ class ContentRepository {
       await _localStorage.updateComment(pk.substring(5), comment.toCacheModel);
     }
 
-    return (reactionResult.actionTaken, reactionResult.reactions.toDomainModel);
+    return (reactionResult.actionTaken, reactionResult.reactions.toDomainModel());
   }
 
   Stream<TrustObject?> getTrustObjectBySlug(String userSlug) async* {

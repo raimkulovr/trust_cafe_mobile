@@ -1,128 +1,84 @@
 import 'package:equatable/equatable.dart';
 
-class Reactions extends Equatable{
-  const Reactions({
-    required this.blueHeart,
-    required this.coldSweat,
-    required this.fingersCrossed,
-    required this.partyingFace,
-    required this.rage,
-    required this.relieved,
-    required this.rofl,
-    required this.sunglasses,
-    required this.trustBranch,
-    required this.eyes,
-    required this.astonished,
-    required this.shrug,
+final class Reaction extends Equatable {
+  static const String sourceTypeAsset = 'asset';
+
+  static Map<String, Reaction> knownReactions = const {
+    'thumbs_up': Reaction._('thumbs_up', 1, source: sourceTypeAsset),
+    'thumbs_down': Reaction._('thumbs_down', 2, source: sourceTypeAsset),
+    'partying_face': Reaction._('partying_face', 3, source: sourceTypeAsset),
+    'rofl': Reaction._('rofl', 4, source: sourceTypeAsset),
+
+    'rage': Reaction._('rage', 5, source: sourceTypeAsset),
+    'fingers_crossed': Reaction._('fingers_crossed', 6, source: sourceTypeAsset),
+    'sunglasses': Reaction._('sunglasses', 7, source: sourceTypeAsset),
+    'crying_face': Reaction._('crying_face', 8, source: sourceTypeAsset),
+
+    'blue_heart': Reaction._('blue_heart', 9, source: sourceTypeAsset),
+    'eyes': Reaction._('eyes', 10, source: sourceTypeAsset),
+    'thinking_face': Reaction._('thinking_face', 11, source: sourceTypeAsset),
+    'trust_branch': Reaction._('trust_branch', 12, source: sourceTypeAsset),
+
+    'cold_sweat': Reaction._('cold_sweat', 0, source: sourceTypeAsset),
+    'astonished': Reaction._('astonished', 0, source: sourceTypeAsset),
+    'relieved': Reaction._('relieved', 0, source: sourceTypeAsset),
+    'shrug': Reaction._('shrug', 0, source: sourceTypeAsset),
+    'xmas_tree': Reaction._('xmas_tree', 0, source: sourceTypeAsset),
+  };
+
+  const Reaction._(this.name, this.priority, {required this.source});
+  const Reaction.unknown() : name = 'unknown', priority = 0,  source = sourceTypeAsset;
+
+  /// The name of the reaction from the backend.
+  /// Also used to map the correct image asset if [source] == [sourceTypeAsset].
+  final String name;
+
+  /// Since [knownReactions] uses a HashMap, which is unordered,
+  /// we use this parameter to fine-tune the emoji positions when
+  /// displaying the list of reactions to users.
+  ///
+  /// When this value is lower than 1, it is not displayed in the "Reaction Options" tooltip.
+  final int priority;
+
+  /// Treated as URL if not equal to [sourceTypeAsset]
+  final String source;
+
+  bool get isNotUnknown => this != const Reaction.unknown();
+
+  @override
+  List<Object?> get props => [name, priority, source];
+}
+
+class Reactions extends Equatable {
+  final Map<Reaction, int> values;
+
+  Reactions({
+    this.values = const {},
   });
 
-  const Reactions.empty() :
-      this.blueHeart = 0,
-      this.coldSweat = 0,
-      this.fingersCrossed = 0,
-      this.partyingFace = 0,
-      this.rage = 0,
-      this.relieved = 0,
-      this.rofl = 0,
-      this.sunglasses = 0,
-      this.trustBranch = 0,
-      this.eyes = 0,
-      this.astonished = 0,
-      this.shrug = 0;
-
-  final int blueHeart;
-  final int coldSweat;
-  final int fingersCrossed;
-  final int partyingFace;
-  final int rage;
-  final int relieved;
-  final int rofl;
-  final int sunglasses;
-  final int trustBranch;
-  final int eyes;
-  final int astonished;
-  final int shrug;
-
-  Map<String, int> get all => {
-    'blue_heart': blueHeart,
-    'cold_sweat': coldSweat,
-    'fingers_crossed': fingersCrossed,
-    'partying_face': partyingFace,
-    'rage': rage,
-    'relieved': relieved,
-    'rofl': rofl,
-    'sunglasses': sunglasses,
-    'trust_branch': trustBranch,
-    'eyes': eyes,
-    'astonished': astonished,
-    'shrug': shrug,
-};
+  const Reactions.empty() : values = const {};
 
   bool get isEmpty => this == const Reactions.empty();
 
-  @override
-  List<Object?> get props => [
-    blueHeart,
-    coldSweat,
-    fingersCrossed,
-    partyingFace,
-    rage,
-    relieved,
-    rofl,
-    sunglasses,
-    trustBranch,
-    eyes,
-    astonished,
-    shrug,
-  ];
+  Reactions modifyBy(String newReaction, {bool add = true}){
+    final modificationValue = add ? 1 : -1;
+
+    final reaction = Reaction.knownReactions[newReaction];
+    if(reaction==null) return this;
+
+    final newValues = {...values};
+    newValues.update(reaction, (value) => value+modificationValue, ifAbsent: () => modificationValue);
+
+    return copyWith(values: newValues);
+  }
 
   Reactions copyWith({
-    int? blueHeart,
-    int? coldSweat,
-    int? fingersCrossed,
-    int? partyingFace,
-    int? rage,
-    int? relieved,
-    int? rofl,
-    int? sunglasses,
-    int? trustBranch,
-    int? eyes,
-    int? astonished,
-    int? shrug,
-  }) {
-    return Reactions(
-      blueHeart: blueHeart ?? this.blueHeart,
-      coldSweat: coldSweat ?? this.coldSweat,
-      fingersCrossed: fingersCrossed ?? this.fingersCrossed,
-      partyingFace: partyingFace ?? this.partyingFace,
-      rage: rage ?? this.rage,
-      relieved: relieved ?? this.relieved,
-      rofl: rofl ?? this.rofl,
-      sunglasses: sunglasses ?? this.sunglasses,
-      trustBranch: trustBranch ?? this.trustBranch,
-      eyes: eyes ?? this.eyes,
-      astonished: astonished ?? this.astonished,
-      shrug: shrug ?? this.shrug,
-    );
-  }
+    Map<Reaction, int>? values
+  }) => Reactions(
+    values: values ?? this.values,
+  );
 
-  Reactions modifyBy(String reaction, {bool add = true}){
-    final modificationValue = add ? 1 : -1;
-    return switch(reaction){
-      'blue_heart' => copyWith(blueHeart: blueHeart+modificationValue),
-      'cold_sweat' => copyWith(coldSweat: coldSweat+modificationValue),
-      'fingers_crossed' => copyWith(fingersCrossed: fingersCrossed+modificationValue),
-      'partying_face' => copyWith(partyingFace: partyingFace+modificationValue),
-      'rage' => copyWith(rage: rage+modificationValue),
-      'relieved' => copyWith(relieved: relieved+modificationValue),
-      'rofl' => copyWith(rofl: rofl+modificationValue),
-      'sunglasses' => copyWith(sunglasses: sunglasses+modificationValue),
-      'trust_branch' => copyWith(trustBranch: trustBranch+modificationValue),
-      'eyes' => copyWith(eyes: eyes+modificationValue),
-      'astonished' => copyWith(astonished: astonished+modificationValue),
-      'shrug' => copyWith(shrug: shrug+modificationValue),
-      _ => this,
-    };
-  }
+  @override
+  List<Object?> get props => [values];
 
 }

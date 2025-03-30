@@ -30,7 +30,7 @@ extension PostStatisticsDomainToCM on PostStatistics {
         revisionCount: revisionCount,
         voteCount: voteCount,
         voteValueSum: voteValueSum,
-        reactions: reactions.toCacheModel,
+        reactions: reactions.toCacheModel(),
       );
 }
 
@@ -129,7 +129,7 @@ extension CommentStatisticsDomainToCM on CommentStatistics {
           revisionCount: revisionCount,
           voteCount: voteCount,
           voteValueSum: voteValueSum,
-          reactions: reactions.toCacheModel,
+          reactions: reactions.toCacheModel(),
       );
 }
 
@@ -176,21 +176,15 @@ extension UserVoteDomainToCM on UserVote {
 }
 
 extension ReactionsDomainToCM on Reactions {
-  ReactionsCacheModel get toCacheModel =>
-      ReactionsCacheModel(
-        blueHeart: blueHeart,
-        coldSweat: coldSweat,
-        fingersCrossed: fingersCrossed,
-        partyingFace: partyingFace,
-        rage: rage,
-        relieved: relieved,
-        rofl: rofl,
-        sunglasses: sunglasses,
-        trustBranch: trustBranch,
-        eyes : eyes,
-        astonished : astonished,
-        shrug : shrug,
-      );
+  ReactionsCacheModel toCacheModel() {
+    final Map<String, int> reactions = {};
+
+    values.forEach((key, value) {
+      reactions[key.name] = value;
+    },);
+
+    return ReactionsCacheModel(values: reactions);
+  }
 }
 
 extension TrustObjectDomainToCM on TrustObject {

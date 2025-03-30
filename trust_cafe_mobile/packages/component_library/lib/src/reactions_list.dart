@@ -2,6 +2,8 @@ import 'package:component_library/src/utility/number_to_text_extension.dart';
 import 'package:domain_models/domain_models.dart';
 import 'package:flutter/material.dart';
 
+import 'reaction_image.dart';
+
 class ReactionsListWidget extends StatelessWidget {
   const ReactionsListWidget(this.reactions, {this.selectedReaction, this.onReaction, super.key});
 
@@ -15,12 +17,14 @@ class ReactionsListWidget extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final reactionList = [
       'whitespace',
-      ...[...reactions.all.keys.where((e) => reactions.all[e]!>0)]
-        ..sort((a, b) => reactions.all[b]!.compareTo(reactions.all[a]!),),
+      ...[...reactions.values.entries.where((e) => e.value>0 && e.key.isNotUnknown,)]
+        ..sort((a, b) => b.value.compareTo(a.value),),
       'whitespace',
     ];
-    // print('$selectedReaction|||$reactionList');
-    return reactionList.length>=3 ? Container(
+
+    if(reactionList.length<3) return  const SizedBox();
+
+    return Container(
       height: 24,
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: ListView.separated(
@@ -28,29 +32,32 @@ class ReactionsListWidget extends StatelessWidget {
         scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             final reaction = reactionList[index];
-            return reaction == 'whitespace' ? const SizedBox() : Container(
+
+            if(reaction == 'whitespace') return const SizedBox();
+
+            reaction as MapEntry<Reaction, int>;
+
+            return Container(
               decoration: BoxDecoration(
                 color: colorScheme.outline.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
                     width: 1,
-                    color: selectedReaction == reaction ? colorScheme.outline.withOpacity(colorScheme.brightness==Brightness.dark ? 1 : 0.8) : Colors.transparent),
+                    color: selectedReaction == reaction.key.name ? colorScheme.outline.withOpacity(colorScheme.brightness==Brightness.dark ? 1 : 0.8) : Colors.transparent),
               ),
               child: InkWell(
-                onTap: onReaction!=null ? ()=> onReaction!(reaction) : null,
+                onTap: onReaction!=null ? ()=> onReaction!(reaction.key.name) : null,
                 borderRadius: BorderRadius.circular(10),
-                // splashColor: Colors.red,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 6),
                   child: Row(
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 2),
-                        child: Image.asset('assets/icons/reactions/$reaction.png'),
+                        child: ReactionImage(reaction.key, enforceSize: false,),
                       ),
                       const SizedBox(width: 4,),
-                      // Text(reactions.all[reaction].toString())
-                      FittedBox(child: Text(reactions.all[reaction]!.toText))
+                      FittedBox(child: Text(reaction.value.toText))
                     ],
                   ),
                 ),
@@ -59,7 +66,7 @@ class ReactionsListWidget extends StatelessWidget {
           },
           separatorBuilder: (context, index) => const SizedBox(width: 8,),
           itemCount: reactionList.length),
-    ) : const SizedBox();
+    );
   }
 }
 

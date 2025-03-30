@@ -1,5 +1,6 @@
 import 'package:domain_models/domain_models.dart';
 import 'package:key_value_storage/key_value_storage.dart';
+import 'package:content_repository/src/mappers/reaction_map_to_domain.dart';
 
 extension PostCacheToDM on PostCacheModel {
   Post get toDomainModel =>
@@ -30,7 +31,7 @@ extension PostStatisticsCacheToDM on PostStatisticsCacheModel {
         revisionCount: revisionCount,
         voteCount: voteCount,
         voteValueSum: voteValueSum,
-        reactions: reactions?.toDomainModel ?? const Reactions.empty(),
+        reactions: reactions?.values?.toDomainModel() ?? const Reactions.empty(),
       );
 }
 
@@ -129,7 +130,7 @@ extension CommentStatisticsCacheToDM on CommentStatisticsCacheModel {
         revisionCount: revisionCount,
         voteCount: voteCount,
         voteValueSum: voteValueSum,
-        reactions: reactions?.toDomainModel ?? const Reactions.empty(),
+        reactions: reactions?.values?.toDomainModel() ?? const Reactions.empty(),
       );
 }
 
@@ -173,24 +174,6 @@ extension CommentPageCacheToDM on CommentPageCacheModel {
 extension UserVoteCacheToDM on UserVoteCacheModel {
   UserVote get toDomainModel =>
       UserVote(parentSk: parentSk, parentPk: parentPk, isUp: isUp);
-}
-
-extension ReactionsCacheToDM on ReactionsCacheModel {
-  Reactions get toDomainModel =>
-      Reactions(
-        blueHeart: blueHeart ?? 0,
-        coldSweat: coldSweat ?? 0,
-        fingersCrossed: fingersCrossed ?? 0,
-        partyingFace: partyingFace ?? 0,
-        rage: rage ?? 0,
-        relieved: relieved ?? 0,
-        rofl: rofl ?? 0,
-        sunglasses: sunglasses ?? 0,
-        trustBranch: trustBranch ?? 0,
-        eyes : eyes ?? 0,
-        astonished : astonished ?? 0,
-        shrug : shrug ?? 0,
-      );
 }
 
 extension TrustObjectCacheToDM on TrustObjectCacheModel {
