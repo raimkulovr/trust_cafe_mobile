@@ -11,7 +11,7 @@ class ChangePageResponseModel{
     this.lastEvaluatedKey,
   });
 
-  @JsonKey(name: 'Items')
+  @JsonKey(name: 'recentChanges')
   final List<ChangeDetailsResponseModel> changeList;
 
   @JsonKey(name: 'LastEvaluatedKey')
