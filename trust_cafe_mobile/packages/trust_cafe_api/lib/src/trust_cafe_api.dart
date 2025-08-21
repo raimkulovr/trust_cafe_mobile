@@ -200,8 +200,8 @@ class TrustCafeApi {
     final url = _urlBuilder.postDetailsUrl(postId);
     final response = await _dio.get(url);
     final jsonObject = response.data as Map<String, dynamic>;
-    try{
-      final post = PostDetailsResponseModel.fromJson(jsonObject);
+    try {
+      final post = PostDetailsResponseModel.fromJson(jsonObject['post']);
       return post;
     } catch (e) {
       log('$e');
