@@ -618,7 +618,7 @@ class TrustCafeApi {
     final url = _urlBuilder.getBranch(slug);
     final response = await _dio.get(url);
     final jsonObject = response.data as Map<String, dynamic>;
-    final branch = SubwikiDetailsResponseModel.fromJson(jsonObject);
+    final branch = SubwikiDetailsResponseModel.fromJson(jsonObject['branch']);
     return branch;
   }
 
