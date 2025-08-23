@@ -1,21 +1,17 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:trust_cafe_api/src/models/models.dart';
-import 'package:trust_cafe_api/src/models/response/reactions_response_model.dart';
 
 part 'comment_response_model.g.dart';
 
 @JsonSerializable(createToJson: false)
 class CommentResponseModel{
   const CommentResponseModel({
-    required this.path,
     required this.statistics,
     required this.slug,
     required this.createdAt,
     required this.updatedAt,
-    required this.topLevelDestination,
     required this.level,
     required this.commentText,
-    required this.subReply,
     required this.sk,
     required this.pk,
     required this.data,
@@ -26,15 +22,12 @@ class CommentResponseModel{
     this.blurLabel,
   });
 
-  final String path;
   final CommentStatisticsResponseModel statistics;
   final String slug;
   final int createdAt;
   final int updatedAt;
-  final CommentDestinationResponseModel topLevelDestination;
   final int level;
   final String? commentText;
-  final int subReply;
   final String sk;
   final String pk;
   final List<AuthorResponseModel>? authors;

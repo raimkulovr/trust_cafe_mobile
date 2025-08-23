@@ -143,15 +143,12 @@ extension CommentDataResponseToDM on CommentDataResponseModel {
 extension CommentResponseToDM on CommentResponseModel {
   Comment get toDomainModel =>
       Comment(
-        path: path,
         statistics: statistics.toDomainModel,
         slug: slug,
         createdAt: createdAt,
         updatedAt: updatedAt,
-        topLevelDestination: topLevelDestination.toDomainModel,
         level: level,
         commentText: commentText ?? '',
-        subReply: subReply,
         sk: sk,
         pk: pk,
         authors: authors?.map((e) => e.toDomainModel).toList() ?? const [],
@@ -166,17 +163,10 @@ extension CommentResponseToDM on CommentResponseModel {
 extension CommentPageResponseToDM on CommentPageResponseModel {
   CommentPage toDomainModel(String? pageKey)
   {
-    final allComments = commentList.map((e) => e.toDomainModel).toList()..sort((a, b) => a.createdAt.compareTo(b.createdAt));
-    // final subComments = allComments.where((element) => element.data.comment!=null);
-    // allComments
-    //   ..removeWhere((element) => element.subReply>0)
-    //   ..forEach((comment) {
-    //     for (final subComment in subComments) {
-    //       if(subComment.data.comment!.slug == comment.slug){
-    //         comment.subReplies.add(subComment);
-    //       }
-    //     }
-    //   });
+    final allComments = commentList.map((e) => e.toDomainModel).toList();
+
+    allComments.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+
     return CommentPage(
       commentList: allComments,
       pageKey: pageKey,

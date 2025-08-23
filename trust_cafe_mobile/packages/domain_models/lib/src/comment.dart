@@ -5,15 +5,12 @@ import 'reactions.dart';
 
 class Comment extends Equatable{
   const Comment({
-    required this.path,
     required this.statistics,
     required this.slug,
     required this.createdAt,
     required this.updatedAt,
-    required this.topLevelDestination,
     required this.level,
     required this.commentText,
-    required this.subReply,
     required this.sk,
     required this.pk,
     required this.authors,
@@ -24,15 +21,12 @@ class Comment extends Equatable{
     required this.blurLabel,
   });
 
-  final String path;
   final CommentStatistics statistics;
   final String slug;
   final int createdAt;
   final int updatedAt;
-  final CommentDestination topLevelDestination;
   final int level;
   final String commentText;
-  final int subReply;
   final String sk;
   final String pk;
   final List<Author> authors;
@@ -44,15 +38,12 @@ class Comment extends Equatable{
 
   @override
   List<Object?> get props => [
-    path,
     statistics,
     slug,
     createdAt,
     updatedAt,
-    topLevelDestination,
     level,
     commentText,
-    subReply,
     sk,
     pk,
     authors,
@@ -64,15 +55,12 @@ class Comment extends Equatable{
   ];
 
   Comment copyWith({
-    String? path,
     CommentStatistics? statistics,
     String? slug,
     int? createdAt,
     int? updatedAt,
-    CommentDestination? topLevelDestination,
     int? level,
     String? commentText,
-    int? subReply,
     String? sk,
     String? pk,
     List<Author>? authors,
@@ -83,15 +71,12 @@ class Comment extends Equatable{
     Wrapped<String?>? blurLabel,
   }) {
     return Comment(
-      path: path ?? this.path,
       statistics: statistics ?? this.statistics,
       slug: slug ?? this.slug,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
-      topLevelDestination: topLevelDestination ?? this.topLevelDestination,
       level: level ?? this.level,
       commentText: commentText ?? this.commentText,
-      subReply: subReply ?? this.subReply,
       sk: sk ?? this.sk,
       pk: pk ?? this.pk,
       authors: authors ?? this.authors,

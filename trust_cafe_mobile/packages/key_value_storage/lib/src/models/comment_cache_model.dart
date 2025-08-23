@@ -7,15 +7,12 @@ part 'comment_cache_model.g.dart';
 @HiveType(typeId: 10)
 class CommentCacheModel{
   const CommentCacheModel({
-    required this.path,
     required this.statistics,
     required this.slug,
     required this.createdAt,
     required this.updatedAt,
-    required this.topLevelDestination,
     required this.level,
     required this.commentText,
-    required this.subReply,
     required this.sk,
     required this.pk,
     required this.authors,
@@ -26,8 +23,6 @@ class CommentCacheModel{
     required this.blurLabel,
   });
 
-  @HiveField(0)
-  final String path;
   @HiveField(1)
   final CommentStatisticsCacheModel statistics;
   @HiveField(2)
@@ -36,14 +31,10 @@ class CommentCacheModel{
   final int createdAt;
   @HiveField(4)
   final int updatedAt;
-  @HiveField(5)
-  final CommentDestinationCacheModel topLevelDestination;
   @HiveField(6)
   final int level;
   @HiveField(7)
   final String commentText;
-  @HiveField(8)
-  final int subReply;
   @HiveField(9)
   final String sk;
   @HiveField(10)

@@ -102,15 +102,14 @@ extension PostPageCacheToDM on PostPageCacheModel {
 extension CommentCacheToDM on CommentCacheModel {
   Comment get toDomainModel =>
       Comment(
-        path: path,
+        // path: path,
         statistics: statistics.toDomainModel,
         slug: slug,
         createdAt: createdAt,
         updatedAt: updatedAt,
-        topLevelDestination: topLevelDestination.toDomainModel,
+        // topLevelDestination: topLevelDestination.toDomainModel,
         level: level,
         commentText: commentText,
-        subReply: subReply,
         sk: sk,
         pk: pk,
         authors: authors.map((e) => e.toDomainModel).toList(),
