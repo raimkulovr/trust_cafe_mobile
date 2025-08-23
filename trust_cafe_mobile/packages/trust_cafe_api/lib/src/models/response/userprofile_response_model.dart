@@ -13,19 +13,19 @@ class UserprofileResponseModel extends AuthorResponseModel {
     required super.userId,
     required super.slug,
     required this.userBio,
-    required this.blocked,
     required this.createdAt,
     required this.updatedAt,
     required this.statistics,
     super.trustLevel,
     super.trustName,
     super.membershipType,
+    this.blocked,
     this.admin,
   });
 
   final String? userBio;
   final bool? admin;
-  final bool blocked;
+  final bool? blocked;
   final int createdAt;
   final int updatedAt;
   final UserprofileStatisticsResponseModel statistics;

@@ -43,17 +43,9 @@ class TrustCubit extends Cubit<TrustState> {
     };
 
     //TODO: error handling
-    if(state.trustObject==null){
-      _contentRepository.createTrustObject(userSlug: userSlug, trustLevel: trustLevel);
-    } else {
-      final trustObject = state.trustObject;
-      _contentRepository.updateTrustObject(
-          keySk: trustObject!.sk,
-          trustLevel: trustLevel,
-          userSlug: userSlug,
-          newTrustObject: trustObject.copyWith(trustLevel: trustLevel, updatedAt: DateTime.now().millisecondsSinceEpoch)
-      );
-    }
+
+    _contentRepository.setTrustObject(
+        userSlug: userSlug, trustLevel: trustLevel);
   }
 
   void setChosenTrustLevel(double newValue){

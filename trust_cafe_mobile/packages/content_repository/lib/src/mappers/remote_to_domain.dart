@@ -296,22 +296,21 @@ extension NotificationItemReplacementsResponseToDM on NotificationDetailsItemRep
 }
 
 extension UserprofileResponseToDM on UserprofileResponseModel {
-  Userprofile get toDomainModel =>
-      Userprofile(
-          fname: fname,
-          userLanguage: userLanguage,
-          lname: lname,
-          userId: userId,
-          slug: slug,
-          userBio: userBio ?? '',
-          blocked: blocked,
-          createdAt: createdAt,
-          updatedAt: updatedAt,
-          statistics: statistics.toDomainModel,
-          trustLevel: trustLevel,
-          trustName: trustName,
-          membershipType: membershipType,
-          admin: admin,
+  Userprofile get toDomainModel => Userprofile(
+        fname: fname,
+        userLanguage: userLanguage,
+        lname: lname,
+        userId: userId,
+        slug: slug,
+        userBio: userBio ?? '',
+        blocked: blocked ?? false,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        statistics: statistics.toDomainModel,
+        trustLevel: trustLevel,
+        trustName: trustName,
+        membershipType: membershipType,
+        admin: admin,
       );
 }
 

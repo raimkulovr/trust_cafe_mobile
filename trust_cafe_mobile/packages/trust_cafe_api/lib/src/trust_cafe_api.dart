@@ -405,39 +405,20 @@ class TrustCafeApi {
     }
   }
 
-  Future<TrustObjectResponseModel> createTrustObject({
-    required String parentSk,
-    required String parentSlug,
+  Future<void> setTrustObject({
+    required String userSlug,
     required int trustLevel,
   }) async {
     final requestJsonBody = {
       'parent':{
-        'sk': parentSk, //"userprofile#qizil"
+        'sk': 'userprofile#$userSlug', //"userprofile#qizil"
       },
-      'parentSlug': parentSlug,
+      'parentSlug': userSlug,
       'trustLevel': trustLevel,
     };
 
     final url = _urlBuilder.castTrust();
-    final response = await _dio.post(url, data: requestJsonBody);
-    final jsonObject = response.data as Map<String, dynamic>;
-    return TrustObjectResponseModel.fromJson(jsonObject);
-  }
-
-  Future<void> updateTrustObject({
-    required String keyPk,
-    required String keySk,
-    required int trustLevel,
-  }) async {
-    final requestJsonBody = {
-      'key':{
-        'pk': keyPk, //reltrust#userprofile#born-tolive
-        'sk': keySk, //truster#blue-sphere
-      },
-      'trustLevel': trustLevel,
-    };
-
-    final url = _urlBuilder.castTrust();
+    
     await _dio.put(url, data: requestJsonBody);
   }
 
@@ -614,7 +595,9 @@ class TrustCafeApi {
     final url = _urlBuilder.getUserprofile(slug);
     final response = await _dio.get(url);
     final jsonObject = response.data as Map<String, dynamic>;
-    final userprofile = UserprofileResponseModel.fromJson(jsonObject);
+    print(jsonObject);
+    final userprofile =
+        UserprofileResponseModel.fromJson(jsonObject['userprofile']);
     return userprofile;
   }
 

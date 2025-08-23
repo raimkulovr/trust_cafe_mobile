@@ -416,24 +416,11 @@ class ContentRepository {
     }
   }
 
-  Future<TrustObject> createTrustObject({
+  Future<void> setTrustObject({
     required String userSlug,
     required int trustLevel,
   }) async {
-    final creationResult = await _api.createTrustObject(parentSk: 'userprofile#$userSlug', parentSlug: userSlug, trustLevel: trustLevel);
-    final domainTrustObject = creationResult.toDomainModel;
-    await _localStorage.upsertTrustObject(userSlug, domainTrustObject.toCacheModel);
-    return domainTrustObject;
-  }
-
-  Future<void> updateTrustObject({
-    required String keySk,
-    required int trustLevel,
-    required String userSlug,
-    required TrustObject newTrustObject,
-  }) async {
-    final updateResult = await _api.updateTrustObject(keyPk: 'reltrust#userprofile#$userSlug', keySk: keySk, trustLevel: trustLevel);
-    await _localStorage.upsertTrustObject(userSlug, newTrustObject.toCacheModel);
+    await _api.setTrustObject(userSlug: userSlug, trustLevel: trustLevel);
   }
 
   Stream<SpiderUrlData> getSpiderData(String targetUrl, {bool refresh = false}) async* {
