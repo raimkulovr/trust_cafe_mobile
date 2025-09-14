@@ -1,10 +1,7 @@
-import 'package:hive/hive.dart';
+import 'package:hive_ce/hive.dart';
 
-part 'trust_object_cache_model.g.dart';
-
-@HiveType(typeId: 19)
-class TrustObjectCacheModel {
-  const TrustObjectCacheModel({
+class TrustObjectCacheModel extends HiveObject {
+  TrustObjectCacheModel({
     required this.trustLevel,
     required this.pk,
     required this.sk,
@@ -12,15 +9,10 @@ class TrustObjectCacheModel {
     required this.createdAt,
   });
 
-  @HiveField(0)
   final int trustLevel;
-  @HiveField(1)
   final String pk;
-  @HiveField(2)
   final String sk;
-  @HiveField(3)
   final int updatedAt;
-  @HiveField(4)
   final int createdAt;
 
 }

@@ -259,12 +259,8 @@ class _TextEditorViewState extends State<TextEditorView> {
             if (widget.destination == TextEditorDestination.comment)
               return Navigator.of(context).pop((commentText: state.finalHtml, blurLabel: state.blurLabel));
             if (widget.initialText == null) {
-              final sk = (widget.profileSlug != null && state.postToProfile)
-                  ? 'userprofile#${widget.profileSlug}'
-                  : state.selectedBranch?.sk ?? 'maintrunk#maintrunk';
-              final pk = (widget.profileSlug != null && state.postToProfile)
-                  ? 'userprofile#${widget.profileSlug}'
-                  : state.selectedBranch?.pk ?? 'maintrunk#maintrunk';
+              final sk = 'maintrunk#maintrunk';
+              final pk = 'maintrunk#maintrunk';
               return Navigator.of(context).pop((
                 postText: state.finalHtml,
                 collaborative: state.isCollaborative,

@@ -1,8 +1,6 @@
-import 'package:hive/hive.dart';
-part 'translation_cache_model.g.dart';
+import 'package:hive_ce/hive.dart';
 
-@HiveType(typeId: 17)
-class TranslationCacheModel {
+class TranslationCacheModel extends HiveObject {
   TranslationCacheModel({
     required this.itemId,
     required this.sourceHash,
@@ -11,15 +9,10 @@ class TranslationCacheModel {
     required this.translatedText,
   });
 
-  @HiveField(0)
   String itemId;
-  @HiveField(1)
   String sourceHash;
-  @HiveField(2)
   String sourceLanguage;
-  @HiveField(3)
   String targetLanguage;
-  @HiveField(4)
   String translatedText;
 
 }

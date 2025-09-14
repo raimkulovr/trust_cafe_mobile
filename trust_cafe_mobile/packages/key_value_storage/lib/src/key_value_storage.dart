@@ -1,8 +1,11 @@
 import 'dart:developer';
 
+import 'package:hive_ce/hive.dart';
 import 'package:key_value_storage/key_value_storage.dart';
 import 'package:meta/meta.dart';
 import 'package:path_provider/path_provider.dart';
+
+import '../hive/hive_adapters.dart';
 
 class KeyValueStorage {
   static const _appUserBoxKey = 'app-user';

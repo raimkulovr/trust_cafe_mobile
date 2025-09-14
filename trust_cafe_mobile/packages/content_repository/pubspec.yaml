@@ -22,4 +22,4 @@ dependencies:
   flutter_cache_manager: ^3.4.1
 
 dev_dependencies:
-  lints: ^5.0.0
+  flutter_lints: ^6.0.0

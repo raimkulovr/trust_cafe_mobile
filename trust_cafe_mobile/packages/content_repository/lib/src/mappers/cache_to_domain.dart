@@ -222,20 +222,17 @@ extension SpiderOembedDataCacheToDM on SpiderOembedDataCacheModel {
 extension SubwikiCacheToDM on SubwikiCacheModel {
   Subwiki get toDomainModel =>
       Subwiki(
-        sk: sk,
-        pk: pk,
         slug: slug,
         label: subwikiLabel,
         description: subwikiDesc,
         createdAt: createdAt,
-        updatedAt: updatedAt,
         statistics: statistics.toDomainModel,
         lang: subwikiLang,
-        authors: authors?.map((e) => e.toDomainModel,).toList(),
         createdByUser: createdByUser?.toDomainModel,
         branchIcon: branchIcon,
-        orderedListAName: orderedListAName,
-        orderedListAValue: orderedListAValue,
+        branchColor: branchColor ?? '',
+        branchId: branchId ?? '',
+        isFollowing: isFollowing ?? false,
       );
 }
 

@@ -545,7 +545,8 @@ class TrustCafeApi {
     final url = _urlBuilder.getSubwikis(offset);
     final response = await _dio.get(url);
     final jsonObject = response.data as Map<String, dynamic>;
-    final subwikiListPage = SubwikiPageResponseModel.fromJson(jsonObject);
+    final subwikiListPage =
+        SubwikiPageResponseModel.fromJson(jsonObject['branches']);
     return subwikiListPage;
   }
 

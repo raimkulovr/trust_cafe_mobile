@@ -6,20 +6,17 @@ import 'package:trust_cafe_api/trust_cafe_api.dart';
 extension SubwikiResponseToCM on SubwikiDetailsResponseModel {
   SubwikiCacheModel get toCacheModel =>
       SubwikiCacheModel(
-        sk: sk,
-        pk: pk,
         slug: slug,
         subwikiLabel: subwikiLabel,
-        subwikiDesc: subwikiDesc ?? subwikiDescription ?? '',
+        subwikiDesc: branchSummary,
         createdAt: createdAt,
-        updatedAt: updatedAt,
         statistics: statistics.toCacheModel,
         subwikiLang: subwikiLang,
-        authors: authors?.map((e) => e.toDomainModel.toCacheModel,).toList(),
-        createdByUser: createdByUser?.toDomainModel.toCacheModel,
+        createdByUser: null,
         branchIcon: branchIcon,
-        orderedListAName: orderedListAName,
-        orderedListAValue: orderedListAValue,
+        branchColor: branchColor,
+        branchId: branchID,
+        isFollowing: isFollowing,
       );
 }
 

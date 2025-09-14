@@ -231,20 +231,17 @@ extension SpiderOembedDataResponseToDM on SpiderOembedDataResponseModel {
 extension SubwikiResponseToDM on SubwikiDetailsResponseModel {
   Subwiki get toDomainModel =>
       Subwiki(
-          sk: sk,
-          pk: pk,
-          slug: slug,
-          label: subwikiLabel,
-          description: subwikiDesc ?? subwikiDescription ?? '',
-          createdAt: createdAt,
-          updatedAt: updatedAt,
-          statistics: statistics.toDomainModel,
-          lang: subwikiLang,
-          authors: authors?.map((e) => e.toDomainModel,).toList(),
-          createdByUser: createdByUser?.toDomainModel,
-          branchIcon: branchIcon,
-          orderedListAName: orderedListAName,
-          orderedListAValue: orderedListAValue,
+        slug: slug,
+        label: subwikiLabel,
+        description: branchSummary,
+        createdAt: createdAt,
+        statistics: statistics.toDomainModel,
+        lang: subwikiLang,
+        createdByUser: null,
+        branchIcon: branchIcon,
+        branchColor: branchColor,
+        branchId: branchID,
+        isFollowing: isFollowing,
       );
 }
 

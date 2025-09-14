@@ -20,4 +20,4 @@ dependencies:
     path: ../trust_cafe_api
 
 dev_dependencies:
-  lints: ^5.0.0
+  flutter_lints: ^6.0.0

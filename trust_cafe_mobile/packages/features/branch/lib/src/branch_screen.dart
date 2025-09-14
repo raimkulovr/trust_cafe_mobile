@@ -177,7 +177,6 @@ class BranchPopupView extends StatelessWidget {
                         const SizedBox(width: 8,),
                         TcmTextButton(onTap: () {
                           final createdAt = DateTime.fromMillisecondsSinceEpoch(branch.createdAt);
-                          final updatedAt = DateTime.fromMillisecondsSinceEpoch(branch.updatedAt);
                           showDialog(context: context, builder: (dialogcontext) {
                             return AlertDialog(
                               title: Text('Statistics'),
@@ -202,13 +201,8 @@ class BranchPopupView extends StatelessWidget {
                                     Tooltip(
                                         message: '$createdAt'.split('.').first,
                                         child: Text('Created: ${TimeAgo.timeAgo(createdAt)}')),
-                                    Tooltip(
-                                        message: '$updatedAt'.split('.').first,
-                                        child: Text('Updated: ${TimeAgo.timeAgo(updatedAt)}')),
                                     Text('Posts: $posts'),
                                     Text('Members: $followers'),
-                                    if(branch.orderedListAValue!=null)
-                                      Text('Hotness: ${(branch.orderedListAValue!*100).toStringAsFixed(2)}%'),
                                     // if(branch.statistics.authorCount!=null) Text('Author count: ${branch.statistics.authorCount}'),
                                     // if(branch.statistics.revisionCount!=null) Text('Revision count: ${branch.statistics.revisionCount}'),
                                   ],),

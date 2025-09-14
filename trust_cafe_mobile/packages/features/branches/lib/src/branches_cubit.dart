@@ -27,6 +27,7 @@ class BranchesCubit extends Cubit<BranchesState> {
       ));
     }, onError: (error){
       emit(state.copyWith(error: Wrapped.value(error), isLoading: false));
+      throw error;
     });
   }
 
