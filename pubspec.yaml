@@ -15,19 +15,13 @@ workspace:
   - packages/trust_cafe_api
   - packages/user_repository
   - packages/features/auth
-  - packages/features/branch
-  - packages/features/branches
-  - packages/features/changes
   - packages/features/comment
   - packages/features/comments
   - packages/features/feed
   - packages/features/home
   - packages/features/post
   - packages/features/settings
-  - packages/features/spider
   - packages/features/text_editor
-  - packages/features/trust
-  - packages/features/userprofile
 
 dependencies:
   flutter:
@@ -39,11 +33,10 @@ dependencies:
   go_router: ^14.2.0
   flutter_quill: 11.1.1
   equatable: ^2.0.7
+  dropdown_search: ^6.0.1
 
   content_repository:
     path: packages/content_repository
-  changes:
-    path: packages/features/changes
   comment:
     path: packages/features/comment
   comments:
@@ -58,14 +51,8 @@ dependencies:
     path: packages/features/settings
   post:
     path: packages/features/post
-  trust:
-    path: packages/features/trust
   text_editor:
     path: packages/features/text_editor
-  spider:
-    path: packages/features/spider
-  branches:
-    path: packages/features/branches
   feed:
     path: packages/features/feed
   user_repository:

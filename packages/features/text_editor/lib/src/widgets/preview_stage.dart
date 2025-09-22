@@ -1,4 +1,4 @@
-import 'package:branches/branches.dart';
+import 'package:trust_cafe_mobile/features/branches/branches.dart';
 import 'package:component_library/component_library.dart';
 import 'package:content_repository/content_repository.dart';
 import 'package:flutter/gestures.dart';

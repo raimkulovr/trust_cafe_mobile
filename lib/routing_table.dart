@@ -7,7 +7,7 @@ import 'package:domain_models/domain_models.dart';
 import 'package:home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:post/post.dart';
-import 'package:changes/changes.dart';
+import 'package:trust_cafe_mobile/features/changes/changes.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:settings/settings.dart';
 import 'package:trust_cafe_mobile/tab_container_screen.dart';
@@ -89,4 +89,3 @@ Map<String, PageBuilder> buildRoutingTable({
     }
   };
 }
-

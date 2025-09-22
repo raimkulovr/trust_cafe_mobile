@@ -1,4 +1,4 @@
-import 'package:branches/src/branches_cubit.dart';
+import 'package:trust_cafe_mobile/features/branches/src/branches_cubit.dart';
 import 'package:component_library/component_library.dart';
 import 'package:content_repository/content_repository.dart';
 import 'package:dropdown_search/dropdown_search.dart';
