@@ -5,7 +5,7 @@ import 'package:trust_cafe_mobile/features/feed/feed.dart';
 import 'package:flutter/material.dart' hide Notification;
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:home/src/home_bloc.dart';
+import 'home_bloc.dart';
 import 'package:rxdart/rxdart.dart' hide Notification;
 import 'package:text_editor/text_editor.dart';
 import 'package:user_repository/user_repository.dart';

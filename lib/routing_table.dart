@@ -1,10 +1,10 @@
 import 'dart:developer';
 
-import 'package:auth/auth.dart';
+import 'package:trust_cafe_mobile/features/auth/auth.dart';
 import 'package:component_library/component_library.dart';
 import 'package:content_repository/content_repository.dart';
 import 'package:domain_models/domain_models.dart';
-import 'package:home/home.dart';
+import 'package:trust_cafe_mobile/features/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:trust_cafe_mobile/features/post/post.dart';
 import 'package:trust_cafe_mobile/features/changes/changes.dart';
