@@ -3,7 +3,7 @@ import 'package:content_repository/content_repository.dart';
 import 'package:domain_models/domain_models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:text_editor/text_editor.dart';
+import 'package:trust_cafe_mobile/features/text_editor/text_editor.dart';
 import 'package:trust_cafe_mobile/features/trust/trust.dart';
 import 'package:user_repository/user_repository.dart';
 import 'package:trust_cafe_mobile/features/userprofile/userprofile.dart';

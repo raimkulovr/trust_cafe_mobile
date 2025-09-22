@@ -7,9 +7,9 @@ import 'package:content_repository/content_repository.dart';
 import 'package:domain_models/domain_models.dart';
 import 'package:equatable/equatable.dart';
 import 'package:html/dom.dart';
-import 'package:text_editor/src/regular_expressions/regular_expressions.dart';
-import 'package:text_editor/src/typedefs.dart';
 import 'package:image/image.dart' as img;
+import 'regular_expressions/regular_expressions.dart';
+import 'typedefs.dart';
 
 part 'text_editor_state.dart';
 

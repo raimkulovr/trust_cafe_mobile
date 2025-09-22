@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:trust_cafe_mobile/features/post/post.dart';
 import 'package:trust_cafe_mobile/features/changes/changes.dart';
 import 'package:routemaster/routemaster.dart';
-import 'package:settings/settings.dart';
+import 'package:trust_cafe_mobile/features/settings/settings.dart';
 import 'package:trust_cafe_mobile/tab_container_screen.dart';
 import 'package:user_repository/user_repository.dart';
 

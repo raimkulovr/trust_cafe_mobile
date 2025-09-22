@@ -10,7 +10,7 @@ import 'package:component_library/component_library.dart';
 import 'package:content_repository/content_repository.dart';
 import 'package:domain_models/domain_models.dart';
 import 'package:user_repository/user_repository.dart';
-import 'package:text_editor/text_editor.dart';
+import 'package:trust_cafe_mobile/features/text_editor/text_editor.dart';
 
 import 'package:trust_cafe_mobile/features/comment/comment.dart';
 import 'comments_bloc.dart';

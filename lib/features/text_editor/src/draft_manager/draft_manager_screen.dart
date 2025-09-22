@@ -2,8 +2,8 @@ import 'package:component_library/component_library.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart';
-import 'package:text_editor/src/draft_manager/draft_manager_cubit.dart';
 import 'package:user_repository/user_repository.dart';
+import 'draft_manager_cubit.dart';
 
 class DraftManagerScreen extends StatelessWidget {
   const DraftManagerScreen({
