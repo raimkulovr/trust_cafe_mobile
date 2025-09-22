@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart' hide Change;
 
 import 'package:content_repository/content_repository.dart';
 import 'package:user_repository/user_repository.dart';
-import 'package:userprofile/userprofile.dart';
-import 'package:branch/branch.dart';
+import 'package:trust_cafe_mobile/features/userprofile/userprofile.dart';
+import 'package:trust_cafe_mobile/features/branch/branch.dart';
 
 import 'changes_cubit.dart';
 

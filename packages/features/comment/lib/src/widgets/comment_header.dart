@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:text_editor/text_editor.dart';
 import 'package:trust/trust.dart';
 import 'package:user_repository/user_repository.dart';
-import 'package:userprofile/userprofile.dart';
+import 'package:trust_cafe_mobile/features/userprofile/userprofile.dart';
 
 import '../comment_cubit.dart';
 import 'comment_callback_provider.dart';
