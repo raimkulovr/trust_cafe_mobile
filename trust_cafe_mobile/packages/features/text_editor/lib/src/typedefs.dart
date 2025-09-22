@@ -1,4 +1,0 @@
-enum TextEditorDestination {
-  post,
-  comment,
-}

@@ -1,0 +1,104 @@
+name: trust_cafe_mobile
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.3.0+5
+
+environment:
+  sdk: '>=3.6.0 <4.0.0'
+
+workspace:
+  - packages/component_library
+  - packages/content_repository
+  - packages/domain_models
+  - packages/key_value_storage
+  - packages/trust_cafe_api
+  - packages/user_repository
+  - packages/features/auth
+  - packages/features/branch
+  - packages/features/branches
+  - packages/features/changes
+  - packages/features/comment
+  - packages/features/comments
+  - packages/features/feed
+  - packages/features/home
+  - packages/features/post
+  - packages/features/settings
+  - packages/features/spider
+  - packages/features/text_editor
+  - packages/features/trust
+  - packages/features/userprofile
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  bloc: ^8.1.4
+  flutter_bloc: ^8.1.6
+  routemaster: ^1.0.1
+  go_router: ^14.2.0
+  flutter_quill: 11.1.1
+
+  content_repository:
+    path: packages/content_repository
+  changes:
+    path: packages/features/changes
+  comment:
+    path: packages/features/comment
+  comments:
+    path: packages/features/comments
+  component_library:
+    path: packages/component_library
+  auth:
+    path: packages/features/auth
+  home:
+    path: packages/features/home
+  settings:
+    path: packages/features/settings
+  post:
+    path: packages/features/post
+  trust:
+    path: packages/features/trust
+  text_editor:
+    path: packages/features/text_editor
+  spider:
+    path: packages/features/spider
+  branches:
+    path: packages/features/branches
+  feed:
+    path: packages/features/feed
+  user_repository:
+    path: packages/user_repository
+  trust_cafe_api:
+    path: packages/trust_cafe_api
+  key_value_storage:
+    path: packages/key_value_storage
+  domain_models:
+    path: packages/domain_models
+
+dependency_overrides:
+  win32: ^5.5.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.1
+
+flutter_launcher_icons:
+  android: true
+  image_path: "assets/appicon_legacy.png"
+  min_sdk_android: 21
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/appicon.png"
+  adaptive_icon_monochrome: "assets/appicon_monochrome.png"
+  adaptive_icon_foreground_inset: 22
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/icons/reactions/
+    - shorebird.yaml

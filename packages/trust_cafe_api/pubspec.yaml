@@ -1,0 +1,26 @@
+name: trust_cafe_api
+description: "Package to interact with TrustCafe API."
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: '>=3.6.0 <4.0.0'
+
+resolution: workspace
+
+dependencies:
+  dio: ^5.7.0
+  equatable: ^2.0.7
+  http: ^1.2.2
+  json_annotation: ^4.9.0
+  rxdart: ^0.28.0
+
+dev_dependencies:
+  build_runner: ^2.7.1
+  http_mock_adapter: ^0.6.1
+  json_serializable: ^6.11.1
+  mockito: ^5.4.4
+  flutter_lints: ^6.0.0
+  test: ^1.26.2
+
+
