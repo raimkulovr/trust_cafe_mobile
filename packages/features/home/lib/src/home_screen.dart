@@ -1,7 +1,7 @@
 import 'package:component_library/component_library.dart';
 import 'package:content_repository/content_repository.dart';
 import 'package:domain_models/domain_models.dart';
-import 'package:feed/feed.dart';
+import 'package:trust_cafe_mobile/features/feed/feed.dart';
 import 'package:flutter/material.dart' hide Notification;
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

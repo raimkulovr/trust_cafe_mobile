@@ -9,7 +9,7 @@ import 'package:component_library/component_library.dart';
 import 'package:content_repository/content_repository.dart';
 import 'package:domain_models/domain_models.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:post/post.dart';
+import 'package:trust_cafe_mobile/features/post/post.dart';
 import 'package:user_repository/user_repository.dart';
 
 import 'feed_bloc.dart';

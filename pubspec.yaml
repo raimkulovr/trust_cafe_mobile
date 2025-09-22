@@ -15,9 +15,7 @@ workspace:
   - packages/trust_cafe_api
   - packages/user_repository
   - packages/features/auth
-  - packages/features/feed
   - packages/features/home
-  - packages/features/post
   - packages/features/settings
   - packages/features/text_editor
 
@@ -48,12 +46,8 @@ dependencies:
     path: packages/features/home
   settings:
     path: packages/features/settings
-  post:
-    path: packages/features/post
   text_editor:
     path: packages/features/text_editor
-  feed:
-    path: packages/features/feed
   user_repository:
     path: packages/user_repository
   trust_cafe_api:
