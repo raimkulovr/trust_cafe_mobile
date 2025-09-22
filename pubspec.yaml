@@ -15,8 +15,6 @@ workspace:
   - packages/trust_cafe_api
   - packages/user_repository
   - packages/features/auth
-  - packages/features/comment
-  - packages/features/comments
   - packages/features/feed
   - packages/features/home
   - packages/features/post
@@ -34,13 +32,14 @@ dependencies:
   flutter_quill: 11.1.1
   equatable: ^2.0.7
   dropdown_search: ^6.0.1
+  bloc_concurrency: ^0.2.5
+
+  # Comments
+  anchor_scroll_controller: ^0.4.4
+  infinite_scroll_pagination: ^4.1.0
 
   content_repository:
     path: packages/content_repository
-  comment:
-    path: packages/features/comment
-  comments:
-    path: packages/features/comments
   component_library:
     path: packages/component_library
   auth:

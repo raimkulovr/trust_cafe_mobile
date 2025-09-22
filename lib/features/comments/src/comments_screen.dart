@@ -1,18 +1,19 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:comment/comment.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:anchor_scroll_controller/anchor_scroll_controller.dart';
 
-import 'package:comments/src/comments_bloc.dart';
 import 'package:component_library/component_library.dart';
 import 'package:content_repository/content_repository.dart';
 import 'package:domain_models/domain_models.dart';
 import 'package:user_repository/user_repository.dart';
 import 'package:text_editor/text_editor.dart';
+
+import 'package:trust_cafe_mobile/features/comment/comment.dart';
+import 'comments_bloc.dart';
 
 class CommentsScreen extends StatefulWidget {
   const CommentsScreen({

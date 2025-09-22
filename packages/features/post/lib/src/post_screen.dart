@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'package:comments/comments.dart';
+import 'package:trust_cafe_mobile/features/comments/comments.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
