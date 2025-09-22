@@ -2,7 +2,7 @@ import 'package:component_library/component_library.dart';
 import 'package:content_repository/content_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:trust/src/trust_cubit.dart';
+import 'package:trust_cafe_mobile/features/trust/src/trust_cubit.dart';
 
 class TrustScreen extends StatelessWidget {
   const TrustScreen({
