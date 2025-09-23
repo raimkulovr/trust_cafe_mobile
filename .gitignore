@@ -49,6 +49,4 @@ app.*.map.json
 *.dtmp
 /packages/features/*/build/
 /packages/component_library/build/
-pubspec.lock
-*/pubspec.lock
 *.g.dart
