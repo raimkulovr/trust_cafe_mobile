@@ -49,4 +49,3 @@ app.*.map.json
 *.dtmp
 /packages/features/*/build/
 /packages/component_library/build/
-*.g.dart
