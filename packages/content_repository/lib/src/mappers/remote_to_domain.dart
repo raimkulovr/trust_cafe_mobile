@@ -263,20 +263,21 @@ extension NotificationResponseToDM on NotificationDetailsResponseModel{
   Notification get toDomainModel =>
     Notification(
         createdAt: createdAt,
-        updatedAt: updatedAt ?? createdAt,
-        sk: sk,
-        pk: pk,
         item: item.toDomainModel,
     );
 }
 
-extension NotificationItemResponseToDM on NotificationDetailsItemResponseModel{
-  NotificationItem get toDomainModel =>
-      NotificationItem(
-          initiator: initiator.toDomainModel,
-          read: read,
-          reason: reason,
-          replacements: replacements.toDomainModel,
+extension NotificationItemResponseToDM on NotificationDetailsItemResponseModel {
+  NotificationItem get toDomainModel => NotificationItem(
+        initiator: Author(
+            fname: initiator.name,
+            userLanguage: initiator.userLanguage,
+            lname: '',
+            userId: initiator.userId,
+            slug: initiator.slug),
+        read: read,
+        reason: reason,
+        replacements: replacements.toDomainModel,
       );
 }
 

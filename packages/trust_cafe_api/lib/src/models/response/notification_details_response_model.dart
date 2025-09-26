@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:trust_cafe_api/src/models/models.dart';
+
+import 'trust_level_info_converter.dart';
 
 part 'notification_details_response_model.g.dart';
 
@@ -7,16 +8,10 @@ part 'notification_details_response_model.g.dart';
 class NotificationDetailsResponseModel{
   const NotificationDetailsResponseModel({
     required this.createdAt,
-    required this.updatedAt,
-    required this.sk,
-    required this.pk,
     required this.item,
   });
 
   final int createdAt;
-  final int? updatedAt;
-  final String sk;
-  final String pk;
   final NotificationDetailsItemResponseModel item;
 
   static const fromJson = _$NotificationDetailsResponseModelFromJson;
@@ -32,8 +27,7 @@ class NotificationDetailsItemResponseModel{
     required this.replacements,
   });
 
-  @InitiatorInfoConverter()
-  final AuthorResponseModel initiator;
+  final NotificationInitiatorResponseModel initiator;
   final bool read;
   final String reason;
   final NotificationDetailsItemReplacementsResponseModel replacements;
@@ -64,22 +58,25 @@ class NotificationDetailsItemReplacementsResponseModel{
 
 }
 
-class InitiatorInfoConverter
-    extends JsonConverter<AuthorResponseModel, Map<String, dynamic>> {
-  const InitiatorInfoConverter();
+@JsonSerializable(createToJson: false)
+class NotificationInitiatorResponseModel {
+  const NotificationInitiatorResponseModel({
+    required this.name,
+    required this.userLanguage,
+    required this.userId,
+    required this.slug,
+    this.trustName,
+  });
 
-  @override
-  AuthorResponseModel fromJson(Map<String, dynamic> json) {
-    if(json['userID']=='WTS2'){
-      return AuthorResponseModel(fname: 'SYSTEM', userLanguage: null, lname: 'SYSTEM', userId: 'SYSTEM', slug: 'SYSTEM');
-    } else {
-      return AuthorResponseModel.fromJson(json);
-    }
-  }
+  final String name;
+  @JsonKey(name: 'userlanguage')
+  final String? userLanguage;
+  @JsonKey(name: 'userID')
+  final String userId;
+  final String slug;
+  @TrustLevelInfoConverter()
+  @JsonKey(name: 'trustLevelInfo')
+  final String? trustName;
 
-  @Deprecated('Technically not intended to be used since this converter is only used for deserialization.')
-  @override
-  Map<String, dynamic> toJson(AuthorResponseModel object) {
-    throw UnimplementedError();
-  }
+  static const fromJson = _$NotificationInitiatorResponseModelFromJson;
 }
