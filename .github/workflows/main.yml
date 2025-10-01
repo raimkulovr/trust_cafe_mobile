@@ -72,8 +72,10 @@ jobs:
           path: build/app/outputs/bundle/release/app-${{ env.VERSION_NAME }}+${{ env.VERSION_CODE }}.aab
 
       - name: Create Release
+        if: github.ref == 'refs/heads/main'
         uses: ncipollo/release-action@v1
         with:
           artifacts: "build/app/outputs/flutter-apk/app-${{ env.VERSION_NAME }}+${{ env.VERSION_CODE }}.apk,build/app/outputs/bundle/release/app-${{ env.VERSION_NAME }}+${{ env.VERSION_CODE }}.aab"
           tag: v${{ env.VERSION }}
+          commit: ${{ github.sha }}
           token: ${{ secrets.GITHUB_TOKEN }}
