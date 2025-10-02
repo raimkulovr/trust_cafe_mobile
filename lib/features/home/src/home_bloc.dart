@@ -16,7 +16,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     required ContentRepository contentRepository,
     required UserRepository userRepository,
     required this.appUser,
-  }) :  _contentRepository = contentRepository,
+  })  : _contentRepository = contentRepository,
         _userRepository = userRepository,
         super(const HomeState())
   {
@@ -41,7 +41,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       HomeStarted event,
       Emitter<HomeState> emit,
   ) async {
-    if(appUser.isGuest) return;
+    if (appUser.isGuest) return;
+
     await _contentRepository.getUserVotes();
     final page = await _contentRepository.getNotifications(null);
     emit(state.copyWith(notifications: page.notificationList));
@@ -51,10 +52,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     HomePostCreated event,
     Emitter<HomeState> emit,
   ) async {
-    if(event.postText.isEmpty || event.postText == '') return;
+    if (event.postText.isEmpty || event.postText == '') return;
     final bool isBranchPost = event.parentSk.startsWith('subwiki#');
     try {
-      emit(state.copyWith(creatingNewPost: true, createNewPostError: const Wrapped.value(null)));
+      emit(state.copyWith(
+          creatingNewPost: true,
+          createNewPostError: const Wrapped.value(null)));
       final newPost = await _contentRepository.createPost(
         collaborative: event.collaborative,
         parentSk: event.parentSk,
@@ -63,10 +66,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         postText: event.postText,
         blurLabel: event.blurLabel,
       );
-      emit(state.copyWith(creatingNewPost: false, newPost: Wrapped.value(newPost), createNewPostError: const Wrapped.value(null)));
+      emit(state.copyWith(
+          creatingNewPost: false,
+          newPost: Wrapped.value(newPost),
+          createNewPostError: const Wrapped.value(null)));
     } catch (e) {
-      if(isBranchPost){
-        try{
+      if (isBranchPost) {
+        try {
           final newPost = await _contentRepository.createPost(
             collaborative: event.collaborative,
             parentSk: 'maintrunk#maintrunk',
@@ -75,8 +81,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             postText: event.postText,
             blurLabel: event.blurLabel,
           );
-          emit(state.copyWith(creatingNewPost: false, newPost: Wrapped.value(newPost), createNewPostError: const Wrapped.value(null)));
-        } catch(e){
+          emit(state.copyWith(
+              creatingNewPost: false,
+              newPost: Wrapped.value(newPost),
+              createNewPostError: const Wrapped.value(null)));
+        } catch (e) {
           emit(state.copyWithNewPostError(e));
         }
       } else {
@@ -96,14 +105,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     HomeNotificationsRefreshed event,
     Emitter<HomeState> emit,
   ) async {
-    if(appUser.isGuest) return;
-    if(!event.silent) emit(state.copyWith(isReloadingNotifications: true));
+    if (appUser.isGuest) return;
+
+    if (!event.silent) emit(state.copyWith(isReloadingNotifications: true));
+
     final page = await _contentRepository.getNotifications(null);
-    emit(state.copyWith(notifications: page.notificationList, isReloadingNotifications: false));
+
+    emit(state.copyWith(
+        notifications: page.notificationList, isReloadingNotifications: false));
   }
 
-  @override
-  Future<void> close() {
-    return super.close();
-  }
 }

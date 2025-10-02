@@ -24,16 +24,10 @@ class NotificationPage extends Page {
 class Notification extends Equatable{
   const Notification({
     required this.createdAt,
-    required this.updatedAt,
-    required this.sk,
-    required this.pk,
     required this.item,
   });
 
   final int createdAt;
-  final int updatedAt;
-  final String sk;
-  final String pk;
   final NotificationItem item;
 
   bool get isArticleUpdated => item.reason == 'article_updated';
@@ -52,8 +46,7 @@ class Notification extends Equatable{
   };
 
   @override
-  List<Object> get props => [createdAt, updatedAt, sk, pk, item];
-
+  List<Object> get props => [createdAt, item];
 }
 
 class NotificationItem extends Equatable {
