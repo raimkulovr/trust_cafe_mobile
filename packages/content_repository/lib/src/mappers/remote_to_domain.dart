@@ -237,7 +237,7 @@ extension SubwikiResponseToDM on SubwikiDetailsResponseModel {
         createdAt: createdAt,
         statistics: statistics.toDomainModel,
         lang: subwikiLang,
-        createdByUser: null,
+        createdByUser: createdByUser?.toDomainModel,
         branchIcon: branchIcon,
         branchColor: branchColor,
         branchId: branchID,

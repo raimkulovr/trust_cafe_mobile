@@ -16,6 +16,7 @@ class SubwikiDetailsResponseModel {
     this.branchSummary = "",
     this.branchID = "",
     this.isFollowing = false,
+    this.createdByUser,
   });
 
   final String slug;
@@ -28,6 +29,9 @@ class SubwikiDetailsResponseModel {
   final String branchSummary;
   final String branchID;
   final bool isFollowing;
+  @JsonKey(name: 'data')
+  @SubwikiCreatorConverter()
+  final AuthorResponseModel? createdByUser;
 
   static const fromJson = _$SubwikiDetailsResponseModelFromJson;
 

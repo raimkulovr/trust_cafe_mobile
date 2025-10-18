@@ -22,7 +22,16 @@ SubwikiDetailsResponseModel _$SubwikiDetailsResponseModelFromJson(
       branchSummary: json['branchSummary'] as String? ?? "",
       branchID: json['branchID'] as String? ?? "",
       isFollowing: json['isFollowing'] as bool? ?? false,
+      createdByUser:
+          _$JsonConverterFromJson<Map<String, dynamic>, AuthorResponseModel?>(
+              json['data'], const SubwikiCreatorConverter().fromJson),
     );
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
 
 SubwikiStatisticsResponseModel _$SubwikiStatisticsResponseModelFromJson(
         Map<String, dynamic> json) =>
