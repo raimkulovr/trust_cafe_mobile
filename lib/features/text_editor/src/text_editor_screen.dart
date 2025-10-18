@@ -259,14 +259,19 @@ class _TextEditorViewState extends State<TextEditorView> {
             if (widget.destination == TextEditorDestination.comment)
               return Navigator.of(context).pop((commentText: state.finalHtml, blurLabel: state.blurLabel));
             if (widget.initialText == null) {
-              final sk = 'maintrunk#maintrunk';
-              final pk = 'maintrunk#maintrunk';
+              final key = (widget.profileSlug != null && state.postToProfile)
+                  ? 'userprofile#${widget.profileSlug}'
+                  : state.selectedBranch?.slug != null
+                      ? 'subwiki#${state.selectedBranch!.slug}'
+                      : 'maintrunk#maintrunk';
+
+              //TODO: replace the payload with DTO formed from(and probably in) TextEditorState
               return Navigator.of(context).pop((
                 postText: state.finalHtml,
                 collaborative: state.isCollaborative,
                 cardUrl: state.cardUrl,
-                parentSk: sk,
-                parentPk: pk,
+                parentSk: key,
+                parentPk: key,
                 blurLabel: state.blurLabel,
               ));
             } else {
