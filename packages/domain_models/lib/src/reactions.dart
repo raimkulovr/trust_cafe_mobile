@@ -4,12 +4,11 @@ final class Reaction extends Equatable {
   static const String sourceTypeAsset = 'asset';
 
   static Map<String, Reaction> knownReactions = const {
-    'thumbs_up': Reaction._('thumbs_up', 1, source: sourceTypeAsset),
-    'thumbs_down': Reaction._('thumbs_down', 2, source: sourceTypeAsset),
-    'partying_face': Reaction._('partying_face', 3, source: sourceTypeAsset),
-    'rofl': Reaction._('rofl', 4, source: sourceTypeAsset),
-
-    'rage': Reaction._('rage', 5, source: sourceTypeAsset),
+    'ghost': Reaction._('ghost', 1, source: sourceTypeAsset),
+    'jack_o_lantern': Reaction._('jack_o_lantern', 2, source: sourceTypeAsset),
+    'thumbs_up': Reaction._('thumbs_up', 3, source: sourceTypeAsset),
+    'partying_face': Reaction._('partying_face', 4, source: sourceTypeAsset),
+    'rofl': Reaction._('rofl', 5, source: sourceTypeAsset),
     'fingers_crossed': Reaction._('fingers_crossed', 6, source: sourceTypeAsset),
     'sunglasses': Reaction._('sunglasses', 7, source: sourceTypeAsset),
     'crying_face': Reaction._('crying_face', 8, source: sourceTypeAsset),
@@ -24,6 +23,8 @@ final class Reaction extends Equatable {
     'relieved': Reaction._('relieved', 0, source: sourceTypeAsset),
     'shrug': Reaction._('shrug', 0, source: sourceTypeAsset),
     'xmas_tree': Reaction._('xmas_tree', 0, source: sourceTypeAsset),
+    'thumbs_down': Reaction._('thumbs_down', 0, source: sourceTypeAsset),
+    'rage': Reaction._('rage', 0, source: sourceTypeAsset),
   };
 
   const Reaction._(this.name, this.priority, {required this.source});
