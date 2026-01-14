@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import 'trust_level_info_converter.dart';
+import 'helper/trust_level_info_converter.dart';
 
 part 'notification_details_response_model.g.dart';
 

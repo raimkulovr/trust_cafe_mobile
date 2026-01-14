@@ -191,15 +191,11 @@ class ContentRepository {
     return domainPage;
   }
 
-  Future<Post?> getPostFromNetwork(String postId) async {
+  Future<Post> getPostFromNetwork(String postId) async {
     final apiPost = await _api.getPost(postId);
-    if(apiPost!=null) {
-      final domainPost = apiPost.toDomainModel;
-      await _localStorage.upsertPost(domainPost.toCacheModel);
-      return domainPost;
-    } else {
-      return null;
-    }
+    final domainPost = apiPost.toDomainModel;
+    await _localStorage.upsertPost(domainPost.toCacheModel);
+    return domainPost;
   }
 
   Future<List<UserVote>> getUserVotes() async {
