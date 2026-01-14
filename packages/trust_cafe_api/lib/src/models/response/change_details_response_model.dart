@@ -7,24 +7,26 @@ part 'change_details_response_model.g.dart';
 class ChangeDetailsResponseModel{
   const ChangeDetailsResponseModel({
     required this.changeLabel,
-    required this.action,
     required this.slug,
     required this.uri,
     required this.createdAt,
-    required this.changeText,
-    required this.author,
     required this.changeTextData,
+    this.author,
+    this.createdByUser,
+    this.action,
+    this.changeText,
   });
 
   final String? changeLabel;
-  final String action;
+  final String? action;
   final String slug;
   final String uri;
   final int createdAt;
-  final String changeText;
+  final String? changeText;
   @JsonKey(name: 'data')
   @ChangeDataUserConverter()
-  final AuthorResponseModel author;
+  final AuthorResponseModel? author;
+  final AuthorResponseModel? createdByUser;
   final ChangeTextDataResponseModel changeTextData;
 
   static const fromJson = _$ChangeDetailsResponseModelFromJson;

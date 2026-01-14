@@ -36,6 +36,8 @@ class ChangesCubit extends Cubit<ChangesState> {
           error: Wrapped.value(refresh ? ChangesStateErrors.refresh : ChangesStateErrors.load),
           isLoadingList: false));
       _resetError();
+
+      rethrow;
     }
   }
 

@@ -326,16 +326,21 @@ extension UserprofileStatisticsResponseToDM on UserprofileStatisticsResponseMode
 }
 
 extension ChangeDetailsResponseToDM on ChangeDetailsResponseModel {
-  Change get toDomainModel =>
-      Change(
-          changeLabel: changeLabel,
-          action: action,
-          slug: slug,
-          uri: uri,
-          createdAt: createdAt,
-          changeText: changeText,
-          author: author.toDomainModel,
-          type: ChangeType.values.firstWhere((e) => e.name==changeTextData.type, orElse: () => ChangeType.unknown,),
-          entity: ChangeEntity.values.firstWhere((e) => e.name==changeTextData.entity, orElse: () => ChangeEntity.unknown,),
+  Change get toDomainModel => Change(
+        changeLabel: changeLabel,
+        action: action,
+        slug: slug,
+        uri: uri,
+        createdAt: createdAt,
+        changeText: changeText,
+        author: (author ?? createdByUser)?.toDomainModel,
+        type: ChangeType.values.firstWhere(
+          (e) => e.name == changeTextData.type,
+          orElse: () => ChangeType.unknown,
+        ),
+        entity: ChangeEntity.values.firstWhere(
+          (e) => e.name == changeTextData.entity,
+          orElse: () => ChangeEntity.unknown,
+        ),
       );
 }

@@ -19,26 +19,28 @@ enum ChangeEntity {
 class Change extends Equatable {
   const Change({
     required this.changeLabel,
-    required this.action,
     required this.slug,
     required this.uri,
     required this.createdAt,
-    required this.changeText,
-    required this.author,
     required this.type,
     required this.entity,
+    this.author,
+    this.action,
+    this.changeText,
   });
 
   final String? changeLabel;
-  final String action;
+  final String? action;
   final String slug;
   final String uri;
   final int createdAt;
-  final String changeText;
-  final Author author;
+  final String? changeText;
+  final Author? author;
   final ChangeType type;
   final ChangeEntity entity;
-  bool get isUnknown => type==ChangeType.unknown || entity == ChangeEntity.unknown;
+
+  bool get isUnknown =>
+      type == ChangeType.unknown || entity == ChangeEntity.unknown;
 
   @override
   List<Object?> get props =>

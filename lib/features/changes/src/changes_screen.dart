@@ -203,17 +203,22 @@ class ChangeEntry extends StatelessWidget {
             children: [
               WidgetSpan(
                   alignment: PlaceholderAlignment.middle,
-                  child: UserprofilePopupScreen(
-                      contentRepository: RepositoryProvider.of<ContentRepository>(context),
-                      userRepository: RepositoryProvider.of<UserRepository>(context),
-                      userSlug: change.author.slug,
-                      isProduction: RepositoryProvider.of<UserRepository>(context).isApiChannelProduction(),
-                      appUser: _CallbackProvider.of(context).getAppUser(),
-                      child: Text(change.author.fullName,
-                          style: primaryTextStyle.copyWith(fontWeight: FontWeight.bold,)
-                      )
-                  )
-              ),
+                  child: change.author != null
+                      ? UserprofilePopupScreen(
+                          contentRepository:
+                              RepositoryProvider.of<ContentRepository>(context),
+                          userRepository:
+                              RepositoryProvider.of<UserRepository>(context),
+                          userSlug: change.author!.slug,
+                          isProduction:
+                              RepositoryProvider.of<UserRepository>(context)
+                                  .isApiChannelProduction(),
+                          appUser: _CallbackProvider.of(context).getAppUser(),
+                          child: Text(change.author!.fullName,
+                              style: primaryTextStyle.copyWith(
+                                fontWeight: FontWeight.bold,
+                              )))
+                      : Text('Unknown')),
               TextSpan(text: ' '),
               WidgetSpan(
                   alignment: PlaceholderAlignment.middle,
