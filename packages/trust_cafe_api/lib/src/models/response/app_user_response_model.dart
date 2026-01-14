@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:trust_cafe_api/src/models/response/trust_level_info_converter.dart';
 
 part 'app_user_response_model.g.dart';
 

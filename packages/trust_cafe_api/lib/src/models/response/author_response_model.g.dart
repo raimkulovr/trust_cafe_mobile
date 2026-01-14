@@ -13,7 +13,9 @@ AuthorResponseModel _$AuthorResponseModelFromJson(Map<String, dynamic> json) =>
       lname: json['lname'] as String,
       userId: json['userID'] as String,
       slug: json['slug'] as String,
-      trustLevel: (json['trustLevel'] as num?)?.toDouble(),
+      trustLevel: json['trustLevel'] == null
+          ? ''
+          : const StringDoubleNullConverter().fromJson(json['trustLevel']),
       trustName: _$JsonConverterFromJson<Map<String, dynamic>, String>(
           json['trustLevelInfo'], const TrustLevelInfoConverter().fromJson),
       membershipType: json['membershipType'] as String?,

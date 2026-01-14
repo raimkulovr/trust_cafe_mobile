@@ -158,6 +158,8 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
       } else {
         yield state.copyWithNewPagingError(error,);
       }
+
+      rethrow;
     }
   }
 

@@ -54,20 +54,24 @@ class PostCubit extends Cubit<PostState> {
   late final StreamSubscription _votesChangesSubscription;
 
   Future<void> _loadPost(String postId) async {
-    final post = await _contentRepository.getPostFromNetwork(postId);
-    if(post!=null){
+    try {
+      final post = await _contentRepository.getPostFromNetwork(postId);
+
       emit(PostState(
         post: post,
         isBlurHidden: post.blurLabel!=null,
         isUpvoted: state.isUpvoted,
       ));
+
       await _getReaction();
-    } else {
+    } catch (error) {
       emit(PostState(
-          post: Post.notFound,
-          isUpvoted: state.isUpvoted,
-          error: PostStateErrors.load,
+        post: Post.notFound,
+        isUpvoted: state.isUpvoted,
+        error: PostStateErrors.load,
       ));
+
+      rethrow;
     }
   }
 

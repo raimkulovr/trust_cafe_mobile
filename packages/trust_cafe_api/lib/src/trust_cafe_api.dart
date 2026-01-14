@@ -196,17 +196,12 @@ class TrustCafeApi {
     return commentListPage;
   }
 
-  Future<PostDetailsResponseModel?> getPost(String postId) async {
+  Future<PostDetailsResponseModel> getPost(String postId) async {
     final url = _urlBuilder.postDetailsUrl(postId);
     final response = await _dio.get(url);
     final jsonObject = response.data as Map<String, dynamic>;
-    try {
-      final post = PostDetailsResponseModel.fromJson(jsonObject['post']);
-      return post;
-    } catch (e) {
-      log('$e');
-      return null;
-    }
+    final post = PostDetailsResponseModel.fromJson(jsonObject['post']);
+    return post;
   }
 
   Future<List<AppUserVoteResponseModel>> getAppUserVotes() async {

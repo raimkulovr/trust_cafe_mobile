@@ -153,7 +153,7 @@ class AuthorCacheModelAdapter extends TypeAdapter<AuthorCacheModel> {
       lname: fields[2] as String,
       userId: fields[3] as String,
       slug: fields[4] as String,
-      trustLevel: (fields[5] as num?)?.toDouble(),
+      trustLevelString: fields[8] == null ? '' : fields[8] as String?,
       trustName: fields[6] as String?,
       membershipType: fields[7] as String?,
     );
@@ -173,12 +173,12 @@ class AuthorCacheModelAdapter extends TypeAdapter<AuthorCacheModel> {
       ..write(obj.userId)
       ..writeByte(4)
       ..write(obj.slug)
-      ..writeByte(5)
-      ..write(obj.trustLevel)
       ..writeByte(6)
       ..write(obj.trustName)
       ..writeByte(7)
-      ..write(obj.membershipType);
+      ..write(obj.membershipType)
+      ..writeByte(8)
+      ..write(obj.trustLevelString);
   }
 
   @override

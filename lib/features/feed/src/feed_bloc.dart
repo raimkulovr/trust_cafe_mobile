@@ -59,13 +59,11 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
     );
   }
 
-  Stream<FeedState> _fetchPage(
-  {
+  Stream<FeedState> _fetchPage({
     required FetchPolicy fetchPolicy,
     String? pageKey,
     bool isRefresh = false,
   }) async* {
-
     final pagesStream = _contentRepository.getFeedPage(
         pageKey: pageKey,
         feedType: feedType,
@@ -74,7 +72,6 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
 
     try {
       await for (final newPage in pagesStream) {
-
         final newItemList = newPage.postList;
         final oldItemList = state.postList ?? [];
         final completeItemList = isRefresh || pageKey == null
@@ -98,6 +95,8 @@ class FeedBloc extends Bloc<FeedEvent, FeedState> {
           error,
         );
       }
+
+      rethrow;
     }
   }
 

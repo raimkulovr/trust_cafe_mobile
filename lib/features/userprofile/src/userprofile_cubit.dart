@@ -27,6 +27,8 @@ class UserprofileCubit extends Cubit<UserprofileState> {
     } catch (e) {
       emit(state.copyWith(error: const Wrapped.value(UserprofileStateErrors.load), isLoadingProfile: false));
       _resetError();
+
+      rethrow;
     }
   }
 

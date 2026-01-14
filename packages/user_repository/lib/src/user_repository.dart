@@ -121,7 +121,6 @@ class UserRepository {
       _apiChannelSubject.add(isProduction);
       await _localStorage.clearStorage();
       await clearAuthCredentials();
-      Author.clearCache();
     }
   }
 
