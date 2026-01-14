@@ -6,24 +6,23 @@ final class Reaction extends Equatable {
   static Map<String, Reaction> knownReactions = const {
     'thumbs_up': Reaction._('thumbs_up', 1, source: sourceTypeAsset),
     'thumbs_down': Reaction._('thumbs_down', 2, source: sourceTypeAsset),
-    'partying_face': Reaction._('partying_face', 3, source: sourceTypeAsset),
-    'rofl': Reaction._('rofl', 4, source: sourceTypeAsset),
-
-    'rage': Reaction._('rage', 5, source: sourceTypeAsset),
+    'rage': Reaction._('rage', 3, source: sourceTypeAsset),
+    'partying_face': Reaction._('partying_face', 4, source: sourceTypeAsset),
+    'rofl': Reaction._('rofl', 5, source: sourceTypeAsset),
     'fingers_crossed': Reaction._('fingers_crossed', 6, source: sourceTypeAsset),
     'sunglasses': Reaction._('sunglasses', 7, source: sourceTypeAsset),
     'crying_face': Reaction._('crying_face', 8, source: sourceTypeAsset),
-
     'blue_heart': Reaction._('blue_heart', 9, source: sourceTypeAsset),
     'eyes': Reaction._('eyes', 10, source: sourceTypeAsset),
     'thinking_face': Reaction._('thinking_face', 11, source: sourceTypeAsset),
     'trust_branch': Reaction._('trust_branch', 12, source: sourceTypeAsset),
-
-    'cold_sweat': Reaction._('cold_sweat', 0, source: sourceTypeAsset),
-    'astonished': Reaction._('astonished', 0, source: sourceTypeAsset),
-    'relieved': Reaction._('relieved', 0, source: sourceTypeAsset),
-    'shrug': Reaction._('shrug', 0, source: sourceTypeAsset),
-    'xmas_tree': Reaction._('xmas_tree', 0, source: sourceTypeAsset),
+    'cold_sweat': Reaction._('cold_sweat', 13, source: sourceTypeAsset),
+    'astonished': Reaction._('astonished', 14, source: sourceTypeAsset),
+    'relieved': Reaction._('relieved', 15, source: sourceTypeAsset),
+    'shrug': Reaction._('shrug', 16, source: sourceTypeAsset),
+    'xmas_tree': Reaction._('xmas_tree', 17, source: sourceTypeAsset),
+    'ghost': Reaction._('ghost', 18, source: sourceTypeAsset),
+    'jack_o_lantern': Reaction._('jack_o_lantern', 19, source: sourceTypeAsset),
   };
 
   const Reaction._(this.name, this.priority, {required this.source});
