@@ -24,3 +24,11 @@ The app relies on several internal packages. Their purposes are illustrated in t
 <p align="center">
   <img src="./docs/assets/tcm-screenshots.png" alt="TCM screenshots">
 </p>
+
+## Notes
+
+- Having written most of the code before I had any commercial experience (and I still don’t have commercial experience with Flutter), I have to admit that this repository’s code stinks. Starting with the code style (hello, auto-formatting) and ending with some architectural decisions.
+
+- The “Architecture breakdown” section is a bit outdated. Features are no longer separated into their own packages, as I learned the hard way how difficult it is to maintain and update shared packages. By moving them into the core module, I was hoping the static analyzer would work more effectively, but that didn’t help much either.
+
+- As for the development flow, I tried to apply a strategy I learned at work. It may not be entirely appropriate for a mobile application, but it did improve organization. The basic idea is that the `main` branch always contains the most recent production-ready code. New branches are created from `main` for each task, and each `task branch` must be named after the corresponding ***`issue`*** it addresses. Commits to a `task branch` should include the branch name. Once a task is complete, it can be merged into the `demo` branch, which is currently used to observe behavior alongside other tasks. This repository has CI pipelines configured for both the `main` and `demo` branches.
