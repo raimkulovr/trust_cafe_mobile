@@ -19,12 +19,14 @@ UserprofileResponseModel _$UserprofileResponseModelFromJson(
       updatedAt: (json['updatedAt'] as num).toInt(),
       statistics: UserprofileStatisticsResponseModel.fromJson(
           json['statistics'] as Map<String, dynamic>),
-      trustLevel: json['trustLevel'] as String? ?? '',
+      trustLevel: (json['trustLevel'] as num?)?.toDouble() ?? 0,
       trustName: _$JsonConverterFromJson<Map<String, dynamic>, String>(
-          json['trustLevelInfo'], const TrustLevelInfoConverter().fromJson),
+              json['trustLevelInfo'],
+              const TrustLevelInfoConverter().fromJson) ??
+          '',
       membershipType: json['membershipType'] as String?,
-      blocked: json['blocked'] as bool?,
-      admin: json['admin'] as bool?,
+      blocked: json['blocked'] as bool? ?? false,
+      admin: json['admin'] as bool? ?? false,
     );
 
 Value? _$JsonConverterFromJson<Json, Value>(

@@ -72,7 +72,8 @@ class UserprofilePopupView extends StatelessWidget {
     required this.isAppUser,
     super.key,
   });
-  final bool isProduction;
+
+  final bool isProduction; //TODO: replace with ENV var
   final AppUser appUser;
   final bool isAppUser;
 
@@ -106,12 +107,14 @@ class UserprofilePopupView extends StatelessWidget {
             builder: (context, state) {
               if(state.isLoadingProfile) {
                 return const Padding(
-                  padding:  EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(8.0),
                   child: SizedBox.square(dimension: 40, child: CircularProgressIndicator()),
                 );
               }
+
               final user = state.userprofile;
-              if(user==null){
+
+              if (user == null) {
                 return GestureDetector(
                   onTap: cubit.refresh,
                   child: const Padding(
