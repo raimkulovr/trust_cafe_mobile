@@ -19,7 +19,7 @@ UserprofileResponseModel _$UserprofileResponseModelFromJson(
       updatedAt: (json['updatedAt'] as num).toInt(),
       statistics: UserprofileStatisticsResponseModel.fromJson(
           json['statistics'] as Map<String, dynamic>),
-      trustLevel: (json['trustLevel'] as num?)?.toDouble(),
+      trustLevel: json['trustLevel'] as String? ?? '',
       trustName: _$JsonConverterFromJson<Map<String, dynamic>, String>(
           json['trustLevelInfo'], const TrustLevelInfoConverter().fromJson),
       membershipType: json['membershipType'] as String?,

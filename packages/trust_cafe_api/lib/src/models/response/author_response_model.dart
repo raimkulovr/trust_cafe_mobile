@@ -5,17 +5,17 @@ part 'author_response_model.g.dart';
 
 @JsonSerializable(createToJson: false)
 class AuthorResponseModel{
-  const AuthorResponseModel(
-      {
-        required this.fname,
-        required this.userLanguage,
-        required this.lname,
-        required this.userId,
-        required this.slug,
-        this.trustLevel,
-        this.trustName,
-        this.membershipType,
-      });
+  const AuthorResponseModel({
+    required this.fname,
+    required this.userLanguage,
+    required this.lname,
+    required this.userId,
+    required this.slug,
+    this.trustLevel = '',
+    this.trustName,
+    this.membershipType,
+  });
+
   final String fname;
   @JsonKey(name: 'userlanguage')
   final String? userLanguage;
@@ -23,7 +23,7 @@ class AuthorResponseModel{
   @JsonKey(name: 'userID')
   final String userId;
   final String slug;
-  final double? trustLevel;
+  final String? trustLevel;
   @TrustLevelInfoConverter()
   @JsonKey(name: 'trustLevelInfo')
   final String? trustName;

@@ -7,7 +7,7 @@ class Author extends Equatable {
     required this.lname,
     required this.userId,
     required this.slug,
-    this.trustLevel,
+    this.trustLevel = '',
     this.trustName,
     this.membershipType,
   });
@@ -21,7 +21,7 @@ class Author extends Equatable {
     required String lname,
     required String userId,
     required String slug,
-    double? trustLevel,
+    String? trustLevel,
     String? trustName,
     String? membershipType,
   }){
@@ -55,7 +55,7 @@ class Author extends Equatable {
   final String userId;
   final String slug;
 
-  final double? trustLevel;
+  final String? trustLevel;
   final String? trustName;
   final String? membershipType;
 

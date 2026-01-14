@@ -42,7 +42,7 @@ extension AuthorDomainToCm on Author {
         lname: lname,
         userId: userId,
         slug: slug,
-        trustLevel: trustLevel,
+        trustLevelString: trustLevel,
         trustName: trustName,
         membershipType: membershipType,
       );

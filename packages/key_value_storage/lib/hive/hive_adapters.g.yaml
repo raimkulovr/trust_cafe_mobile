@@ -59,7 +59,7 @@ types:
         index: 13
   AuthorCacheModel:
     typeId: 2
-    nextIndex: 8
+    nextIndex: 9
     fields:
       fname:
         index: 0
@@ -71,12 +71,12 @@ types:
         index: 3
       slug:
         index: 4
-      trustLevel:
-        index: 5
       trustName:
         index: 6
       membershipType:
         index: 7
+      trustLevelString:
+        index: 8
   PostStatisticsCacheModel:
     typeId: 4
     nextIndex: 7

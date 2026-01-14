@@ -8,7 +8,7 @@ class Userprofile extends Author {
     required String lname,
     required String userId,
     required String slug,
-    double? trustLevel,
+    String? trustLevel = '',
     String? trustName,
     String? membershipType,
     required this.userBio,

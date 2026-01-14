@@ -43,7 +43,7 @@ extension AuthorCacheToDm on AuthorCacheModel {
         lname: lname,
         userId: userId,
         slug: slug,
-        trustLevel: trustLevel,
+        trustLevel: trustLevelString,
         trustName: trustName,
         membershipType: membershipType,
       );
