@@ -225,16 +225,16 @@ types:
         index: 2
   CommentOriginCacheModel:
     typeId: 14
-    nextIndex: 4
+    nextIndex: 6
     fields:
       sk:
         index: 0
       pk:
         index: 1
       slug:
-        index: 2
+        index: 4
       createdByUser:
-        index: 3
+        index: 5
   CommentPageCacheModel:
     typeId: 15
     nextIndex: 3

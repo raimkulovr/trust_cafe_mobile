@@ -42,7 +42,12 @@ class CommentsState extends Equatable {
       copyWith(error: Wrapped.value(refreshError!=null ? CommentsStateErrors.refresh : null));
 
   CommentsState copyWithNewCommentError(dynamic createNewCommentError) =>
-      copyWith(error: Wrapped.value(createNewCommentError !=null ? CommentsStateErrors.newComment : null), creatingNewComment: false);
+      copyWith(
+        error: Wrapped.value(createNewCommentError != null
+            ? CommentsStateErrors.newComment
+            : null),
+        creatingNewComment: false,
+      );
 
   CommentsState copyWithUpdatedComment(Comment updatedComment) =>
       copyWith(

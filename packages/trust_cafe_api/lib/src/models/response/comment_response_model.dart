@@ -6,8 +6,6 @@ part 'comment_response_model.g.dart';
 @JsonSerializable(createToJson: false)
 class CommentResponseModel{
   const CommentResponseModel({
-    required this.statistics,
-    required this.slug,
     required this.createdAt,
     required this.updatedAt,
     required this.level,
@@ -16,14 +14,16 @@ class CommentResponseModel{
     required this.pk,
     required this.data,
     required this.topLevel,
+    this.slug,
+    this.statistics,
     this.authors,
     this.archived,
     this.deleted,
     this.blurLabel,
   });
 
-  final CommentStatisticsResponseModel statistics;
-  final String slug;
+  final CommentStatisticsResponseModel? statistics;
+  final String? slug;
   final int createdAt;
   final int updatedAt;
   final int level;
@@ -100,15 +100,65 @@ class CommentOriginResponseModel {
   const CommentOriginResponseModel({
     required this.sk,
     required this.pk,
-    required this.slug,
-    required this.createdByUser,
+    this.slug,
+    this.createdByUser,
   });
 
   final String sk;
   final String pk;
-  final String slug;
+  final String? slug;
   final AuthorResponseModel? createdByUser;
 
   static const fromJson = _$CommentOriginResponseModelFromJson;
+}
 
+@JsonSerializable(createToJson: false)
+class CreateCommentResponseModel {
+  const CreateCommentResponseModel({
+    required this.createdAt,
+    required this.updatedAt,
+    required this.level,
+    required this.commentText,
+    required this.sk,
+    required this.path,
+    required this.userslug,
+    required this.commentOnPost,
+    required this.createdByUser,
+    required this.parent,
+    this.blurLabel,
+    this.statistics,
+  });
+
+  final String? blurLabel;
+  final String commentText;
+  final int createdAt;
+  final int updatedAt;
+  final int level;
+  final String sk;
+  final String path;
+  final String userslug;
+
+  final CommentStatisticsResponseModel? statistics;
+  final CommentOriginResponseModel commentOnPost;
+  final AuthorResponseModel createdByUser;
+  final CommentParentResponseModel parent;
+
+  static const fromJson = _$CreateCommentResponseModelFromJson;
+}
+
+@JsonSerializable(createToJson: false)
+class CommentParentResponseModel {
+  const CommentParentResponseModel({
+    required this.pk,
+    required this.sk,
+    required this.entity,
+    required this.slug,
+  });
+
+  final String pk;
+  final String sk;
+  final String entity;
+  final String slug;
+
+  static const fromJson = _$CommentParentResponseModelFromJson;
 }

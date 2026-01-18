@@ -22,6 +22,8 @@ class CommentHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userRepository = RepositoryProvider.of<UserRepository>(context);
+
     final appUser = CommentCallbackProvider.of(context).getAppUser();
     final author = comment.data.createdByUser;
     final cubit = context.read<CommentCubit>();
@@ -31,10 +33,10 @@ class CommentHeader extends StatelessWidget {
         children: [
           UserprofilePopupScreen(
             contentRepository: RepositoryProvider.of<ContentRepository>(context),
-            userRepository: RepositoryProvider.of<UserRepository>(context),
+            userRepository: userRepository,
             userId: author.userId,
             userSlug: author.slug,
-            isProduction: RepositoryProvider.of<UserRepository>(context).isApiChannelProduction(),
+            isProduction: userRepository.isApiChannelProduction(),
             appUser: CommentCallbackProvider.of(context).getAppUser(),
           ),
           const SizedBox(width: 8),
@@ -82,6 +84,12 @@ class CommentHeader extends StatelessWidget {
               builder: (context, state) {
                 return PopupMenuButton<void Function()>(
                   itemBuilder: (popupcontext) {
+                    //TODO: move link generation somewhere else
+                    final host = userRepository.isApiChannelProduction()
+                        ? 'www.trustcafe.io'
+                        : 'alpha.wts2.net';
+                    final commentLink =
+                        'https://$host/en/post/${comment.topLevel.slug}#comment-${comment.slug}';
                     return [
                       PopupMenuItem(
                         enabled: !state.translationIsProcessing,
@@ -91,7 +99,8 @@ class CommentHeader extends StatelessWidget {
                       CopyPopupMenuItem(state.commentText),
                       PopupMenuItem(
                         enabled: !state.translationIsProcessing,
-                        value: () => CopyManager.copy('https://${RepositoryProvider.of<UserRepository>(context).isApiChannelProduction() ? 'www.trustcafe.io' : 'alpha.wts2.net'}/en/post/${comment.topLevel.slug}#comment-${comment.slug}', type: CopyManagerType.text),
+                        value: () => CopyManager.copy(commentLink,
+                            type: CopyManagerType.text),
                         child: const Text('Copy link to this comment'),
                       ),
                       if(!comment.archived && comment.data.createdByUser.userId == appUser.userId)
@@ -102,14 +111,14 @@ class CommentHeader extends StatelessWidget {
                                 MaterialPageRoute(builder: (_) =>
                                     TextEditorScreen(
                                       contentRepository: RepositoryProvider.of<ContentRepository>(context),
-                                      userRepository: RepositoryProvider.of<UserRepository>(context),
-                                      isEditing: true,
-                                      initialText: state.commentText,
-                                      destination: TextEditorDestination.comment,
-                                      blurLabel: state.blurLabel,
-                                      canChangeIsCollaborative: false,
-                                    )
-                                ));
+                                          userRepository: userRepository,
+                                          isEditing: true,
+                                          initialText: state.commentText,
+                                          destination:
+                                              TextEditorDestination.comment,
+                                          blurLabel: state.blurLabel,
+                                          canChangeIsCollaborative: false,
+                                        )));
                             if(updatedComment is ({String commentText, String? blurLabel}) && updatedComment.commentText.isNotEmpty){
                               cubit.editCommentText(updatedComment.commentText, updatedComment.blurLabel);
                             }
@@ -122,19 +131,21 @@ class CommentHeader extends StatelessWidget {
                         PopupMenuItem(
                           child: state.archived
                               ? const Text('Restore')
-                              : const Text('Archive', style: TextStyle(color: Colors.red)),
+                              : const Text('Archive',
+                                  style: TextStyle(color: Colors.red)),
                           value: () => state.archived
                               ? cubit.restoreComment()
                               : showDialog(
-                            context: context,
-                            builder: (dialogContext) => ArchiveDialog(
-                              type: ArchiveType.comment,
-                              contentText: state.commentText,
-                              author: author,
-                              onArchive: cubit.archiveComment,
-                              imageSizeThreshold: RepositoryProvider.of<UserRepository>(context).imageSizeThreshold,
-                            ),
-                          ),
+                                  context: context,
+                                  builder: (dialogContext) => ArchiveDialog(
+                                    type: ArchiveType.comment,
+                                    contentText: state.commentText,
+                                    author: author,
+                                    onArchive: cubit.archiveComment,
+                                    imageSizeThreshold:
+                                        userRepository.imageSizeThreshold,
+                                  ),
+                                ),
                         ),
                     ];
                   },

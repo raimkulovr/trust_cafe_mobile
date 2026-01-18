@@ -134,11 +134,11 @@ class UrlBuilder {
   }
 
   String createComment(){
-    return '$_urlBase/comment';
+    return '$_urlBase/commentcreate';
   }
 
   String updateComment(){
-    return '${createComment()}/update';
+    return '$_urlBase/comment/update';
   }
 
   String archivePost(){

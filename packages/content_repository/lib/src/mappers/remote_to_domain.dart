@@ -17,7 +17,7 @@ extension PostResponseToDM on PostDetailsResponseModel {
         cardUrl: cardUrl ?? '',
         pk: pk,
         authors: authors?.map((e) => e.toDomainModel).toList(),
-        blurLabel: blurLabel,
+        blurLabel: blurLabel?.trim(),
         archivedBy: archivedBy,
       );
 }
@@ -122,12 +122,11 @@ extension CommentDestinationResponseToDM on CommentDestinationResponseModel {
 }
 
 extension CommentOriginResponseToDM on CommentOriginResponseModel {
-  CommentOrigin get toDomainModel =>
-      CommentOrigin(
-          sk: sk,
-          pk: pk,
-          slug: slug,
-          createdByUser: createdByUser?.toDomainModel,
+  CommentOrigin get toDomainModel => CommentOrigin(
+        sk: sk,
+        pk: pk,
+        slug: slug ?? sk.split('#').last,
+        createdByUser: createdByUser?.toDomainModel,
       );
 }
 
@@ -141,23 +140,52 @@ extension CommentDataResponseToDM on CommentDataResponseModel {
 }
 
 extension CommentResponseToDM on CommentResponseModel {
-  Comment get toDomainModel =>
-      Comment(
-        statistics: statistics.toDomainModel,
-        slug: slug,
-        createdAt: createdAt,
-        updatedAt: updatedAt,
-        level: level,
-        commentText: commentText ?? '',
-        sk: sk,
-        pk: pk,
-        authors: authors?.map((e) => e.toDomainModel).toList() ?? const [],
-        data: data.toDomainModel,
-        archived: archived ?? false,
-        deleted: deleted ?? false,
-        topLevel: topLevel.toDomainModel,
-        blurLabel: blurLabel,
-      );
+  Comment get toDomainModel {
+    final domainSlug = slug ?? sk.split('#').sublist(1).join('-');
+
+    return Comment(
+      statistics: statistics?.toDomainModel ?? CommentStatistics.empty,
+      slug: domainSlug,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      level: level,
+      commentText: commentText ?? '',
+      sk: sk,
+      pk: pk,
+      authors: authors?.map((e) => e.toDomainModel).toList() ?? const [],
+      data: data.toDomainModel,
+      archived: archived ?? false,
+      deleted: deleted ?? false,
+      topLevel: topLevel.toDomainModel,
+      blurLabel: blurLabel?.trim(),
+    );
+  }
+}
+
+extension CreateCommentResponseToDM on CreateCommentResponseModel {
+  Comment get toDomainModel {
+    final domainSlug = sk.split('#').sublist(1).join('-');
+
+    return Comment(
+      statistics: statistics?.toDomainModel ?? CommentStatistics.empty,
+      slug: domainSlug,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      level: level,
+      commentText: commentText ?? '',
+      sk: sk,
+      pk: commentOnPost.sk,
+      authors: [createdByUser.toDomainModel],
+      data: CommentData(createdByUser: createdByUser.toDomainModel),
+      archived: false,
+      deleted: false,
+      topLevel: CommentOrigin(
+          sk: commentOnPost.sk,
+          pk: commentOnPost.pk,
+          slug: commentOnPost.sk.split('#').last),
+      blurLabel: blurLabel?.trim(),
+    );
+  }
 }
 
 extension CommentPageResponseToDM on CommentPageResponseModel {

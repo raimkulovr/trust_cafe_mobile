@@ -220,7 +220,8 @@ class _CommentsViewState extends State<CommentsView> {
                                     onCommentReplied: setReplyData,
                                     onParentAuthorPressed: comment.data.comment!=null
                                         ? ()=> _scrollTo(comment.data.comment!.slug)
-                                        : null, postId: _bloc.postData.postId,
+                                        : null,
+                                    postId: _bloc.postData.postId,
                                   ),
                                 )
                               : const LinearProgressIndicator();

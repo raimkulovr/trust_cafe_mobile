@@ -28,7 +28,7 @@ class CommentCubit extends Cubit<CommentState> {
           isUpvoted: contentRepository.isSubjectUpvoted(comment.sk),
           reactions: comment.statistics.reactions,
           blurLabel: comment.blurLabel,
-          isBlurHidden: comment.blurLabel!=null,
+          isBlurHidden: comment.blurLabel?.isNotEmpty ?? false,
           isArchivedHidden: comment.archived,
           archived: comment.archived,
       )){
@@ -188,30 +188,27 @@ class CommentCubit extends Cubit<CommentState> {
   Future<void> editCommentText(String newCommentText, String? blurLabel) async {
     final initialCommentText = state.commentText;
     final initialBlurLabel = state.blurLabel;
+
     emit(state.copyWith(
         commentText: newCommentText,
         blurLabel: Wrapped.value(blurLabel),
         isBlurHidden: state.blurLabel==null && blurLabel!=null));
+
     try{
-      final result = await _contentRepository.updateComment(
-        keySk: comment.sk,
-        keyPk: comment.pk,
-        keySlug: comment.slug,
-        commentText: newCommentText,
-        blurLabel: blurLabel,
-      );
-      emit(state.copyWith(
-          commentText: result.commentText,
-          reactions: result.statistics.reactions,
-          voteValueSum: result.statistics.voteValueSum,
-          voteCount: result.statistics.voteCount,
-          blurLabel: Wrapped.value(result.blurLabel),
-      ));
-    } catch (e){
+      await _contentRepository
+          .updateComment(state.getCommentRepresentation(comment));
+    } catch (e) {
       log('editCommentText error: $e');
-      emit(state.copyWith(commentText: initialCommentText, blurLabel: Wrapped.value(initialBlurLabel),
-          error: const Wrapped.value(CommentStateErrors.edit)));
+
+      emit(state.copyWith(
+        commentText: initialCommentText,
+        blurLabel: Wrapped.value(initialBlurLabel),
+        error: const Wrapped.value(CommentStateErrors.edit),
+      ));
+
       _resetError();
+
+      rethrow;
     }
   }
 

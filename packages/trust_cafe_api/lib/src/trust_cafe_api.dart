@@ -290,10 +290,11 @@ class TrustCafeApi {
     return comment;
   }
 
-  Future<CommentResponseModel> createComment({
+  Future<CreateCommentResponseModel> createComment({
     required String parentSk,
     required String parentPk,
-    required String parentSlug,
+    required String topLevelSk,
+    required String topLevelPk,
     required String commentText,
     required String? blurLabel,
   }) async {
@@ -302,15 +303,19 @@ class TrustCafeApi {
       'parent': {
         'sk': parentSk,
         'pk': parentPk,
-        'slug': parentSlug,
+      },
+      'topLevel': {
+        'sk': topLevelSk,
+        'pk': topLevelPk,
       },
       'commentText': commentText,
       'blurLabel': blurLabel,
+      'version': 3,
     };
 
     final response = await _dio.post(url, data: requestJsonBody);
     final jsonObject = response.data as Map<String, dynamic>;
-    final comment = CommentResponseModel.fromJson(jsonObject);
+    final comment = CreateCommentResponseModel.fromJson(jsonObject['Item']);
     return comment;
   }
 
@@ -476,10 +481,9 @@ class TrustCafeApi {
     final jsonObject = response.data as Map<String, dynamic>;
     final post = PostDetailsResponseModel.fromJson(jsonObject);
     return post;
-
   }
 
-  Future<CommentResponseModel> updateComment({
+  Future<bool> updateComment({
     required String keySk,
     required String keyPk,
     required String keySlug,
@@ -499,8 +503,8 @@ class TrustCafeApi {
 
     final response = await _dio.put(url, data: requestJsonBody);
     final jsonObject = response.data as Map<String, dynamic>;
-    final comment = CommentResponseModel.fromJson(jsonObject);
-    return comment;
+
+    return jsonObject['success'] is bool && jsonObject['success'];
   }
 
   Future<String> uploadImage({

@@ -681,8 +681,8 @@ class CommentOriginCacheModelAdapter
     return CommentOriginCacheModel(
       sk: fields[0] as String,
       pk: fields[1] as String,
-      slug: fields[2] as String,
-      createdByUser: fields[3] as AuthorCacheModel?,
+      slug: fields[4] as String,
+      createdByUser: fields[5] as AuthorCacheModel?,
     );
   }
 
@@ -694,9 +694,9 @@ class CommentOriginCacheModelAdapter
       ..write(obj.sk)
       ..writeByte(1)
       ..write(obj.pk)
-      ..writeByte(2)
+      ..writeByte(4)
       ..write(obj.slug)
-      ..writeByte(3)
+      ..writeByte(5)
       ..write(obj.createdByUser);
   }
 

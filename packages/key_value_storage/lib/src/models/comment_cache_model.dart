@@ -87,7 +87,7 @@ class CommentOriginCacheModel extends HiveObject {
     required this.sk,
     required this.pk,
     required this.slug,
-    required this.createdByUser,
+    this.createdByUser,
   });
 
   final String sk;

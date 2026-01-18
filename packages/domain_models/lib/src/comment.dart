@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'author.dart';
 import 'reactions.dart';
 
-class Comment extends Equatable{
+final class Comment extends Equatable {
   const Comment({
     required this.statistics,
     required this.slug,
@@ -107,15 +107,6 @@ class CommentStatistics extends Equatable{
   final int voteValueSum;
   final Reactions reactions;
 
-  @override
-  List<Object?> get props => [
-    authorCount,
-    commentReplies,
-    revisionCount,
-    voteCount,
-    voteValueSum,
-    reactions,
-  ];
 
   CommentStatistics copyWith({
     int? authorCount,
@@ -134,6 +125,23 @@ class CommentStatistics extends Equatable{
       reactions: reactions ?? this.reactions,
     );
   }
+
+  static CommentStatistics get empty => const CommentStatistics(
+        authorCount: 0,
+        commentReplies: 0,
+        revisionCount: 0,
+        reactions: Reactions.empty(),
+      );
+
+  @override
+  List<Object?> get props => [
+        authorCount,
+        commentReplies,
+        revisionCount,
+        voteCount,
+        voteValueSum,
+        reactions,
+      ];
 }
 
 class CommentDestination extends Equatable {
@@ -179,7 +187,7 @@ class CommentOrigin extends Equatable{
     required this.sk,
     required this.pk,
     required this.slug,
-    required this.createdByUser,
+    this.createdByUser,
   });
 
   final String sk;
@@ -192,7 +200,5 @@ class CommentOrigin extends Equatable{
   List<Object?> get props => [
     sk,
     pk,
-    slug,
-    createdByUser,
   ];
 }

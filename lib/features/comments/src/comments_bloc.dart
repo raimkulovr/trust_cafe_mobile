@@ -170,6 +170,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
     if(event.commentText.isEmpty || event.commentText == '') return;
     try {
       emit(state.copyWith(creatingNewComment: true));
+
       final commentText = event.simple
           ? event.commentText
               .replaceAll(RegExp(r'<[^>]*>'), '')
@@ -177,19 +178,23 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
               .map((e) => '<p>$e</p>',)
               .join('<br>')
           : event.commentText;
+
       final newComment = await _contentRepository.createComment(
-          postId: event.postId,
-          parentSk: event.parentSk,
-          parentPk: event.parentPk,
-          parentSlug: event.parentSlug,
-          commentText: commentText,
-          blurLabel: event.blurLabel,
+        postId: event.postId,
+        parentSk: event.parentSk,
+        parentPk: event.parentPk,
+        topLevelSk: postData.sk,
+        topLevelPk: postData.pk,
+        commentText: commentText,
+        blurLabel: event.blurLabel,
       );
 
       emit(state.copyWith(commentList: Wrapped.value([...?state.commentList, newComment]), creatingNewComment: false));
     } catch (e) {
       emit(state.copyWithNewCommentError(e));
       emit(state.copyWithNewCommentError(null));
+
+      rethrow;
     }
   }
 

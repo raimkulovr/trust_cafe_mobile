@@ -9,9 +9,6 @@ part of 'comment_response_model.dart';
 CommentResponseModel _$CommentResponseModelFromJson(
         Map<String, dynamic> json) =>
     CommentResponseModel(
-      statistics: CommentStatisticsResponseModel.fromJson(
-          json['statistics'] as Map<String, dynamic>),
-      slug: json['slug'] as String,
       createdAt: (json['createdAt'] as num).toInt(),
       updatedAt: (json['updatedAt'] as num).toInt(),
       level: (json['level'] as num).toInt(),
@@ -22,6 +19,11 @@ CommentResponseModel _$CommentResponseModelFromJson(
           json['data'] as Map<String, dynamic>),
       topLevel: CommentOriginResponseModel.fromJson(
           json['topLevel'] as Map<String, dynamic>),
+      slug: json['slug'] as String?,
+      statistics: json['statistics'] == null
+          ? null
+          : CommentStatisticsResponseModel.fromJson(
+              json['statistics'] as Map<String, dynamic>),
       authors: (json['authors'] as List<dynamic>?)
           ?.map((e) => AuthorResponseModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -71,9 +73,41 @@ CommentOriginResponseModel _$CommentOriginResponseModelFromJson(
     CommentOriginResponseModel(
       sk: json['sk'] as String,
       pk: json['pk'] as String,
-      slug: json['slug'] as String,
+      slug: json['slug'] as String?,
       createdByUser: json['createdByUser'] == null
           ? null
           : AuthorResponseModel.fromJson(
               json['createdByUser'] as Map<String, dynamic>),
+    );
+
+CreateCommentResponseModel _$CreateCommentResponseModelFromJson(
+        Map<String, dynamic> json) =>
+    CreateCommentResponseModel(
+      createdAt: (json['createdAt'] as num).toInt(),
+      updatedAt: (json['updatedAt'] as num).toInt(),
+      level: (json['level'] as num).toInt(),
+      commentText: json['commentText'] as String,
+      sk: json['sk'] as String,
+      path: json['path'] as String,
+      userslug: json['userslug'] as String,
+      commentOnPost: CommentOriginResponseModel.fromJson(
+          json['commentOnPost'] as Map<String, dynamic>),
+      createdByUser: AuthorResponseModel.fromJson(
+          json['createdByUser'] as Map<String, dynamic>),
+      parent: CommentParentResponseModel.fromJson(
+          json['parent'] as Map<String, dynamic>),
+      blurLabel: json['blurLabel'] as String?,
+      statistics: json['statistics'] == null
+          ? null
+          : CommentStatisticsResponseModel.fromJson(
+              json['statistics'] as Map<String, dynamic>),
+    );
+
+CommentParentResponseModel _$CommentParentResponseModelFromJson(
+        Map<String, dynamic> json) =>
+    CommentParentResponseModel(
+      pk: json['pk'] as String,
+      sk: json['sk'] as String,
+      entity: json['entity'] as String,
+      slug: json['slug'] as String,
     );

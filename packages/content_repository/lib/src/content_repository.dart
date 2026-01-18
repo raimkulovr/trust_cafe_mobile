@@ -317,16 +317,18 @@ class ContentRepository {
     required String postId,
     required String parentSk,
     required String parentPk,
-    required String parentSlug,
+    required String topLevelSk,
+    required String topLevelPk,
     required String commentText,
     required String? blurLabel,
   }) async {
     final newComment = await _api.createComment(
-        parentSk: parentSk,
-        parentPk: parentPk,
-        parentSlug: parentSlug,
-        commentText: commentText,
-        blurLabel: blurLabel,
+      parentSk: parentSk,
+      parentPk: parentPk,
+      topLevelSk: topLevelSk,
+      topLevelPk: topLevelPk,
+      commentText: commentText,
+      blurLabel: blurLabel,
     );
     final domainComment = newComment.toDomainModel;
     await _localStorage.createComment(postId, domainComment.toCacheModel);
@@ -544,23 +546,21 @@ class ContentRepository {
     return domainPost;
   }
 
-  Future<Comment> updateComment({
-    required String keySk,
-    required String keyPk,
-    required String keySlug,
-    required String commentText,
-    required String? blurLabel,
-  }) async {
-    final updatedComment = await _api.updateComment(
-      keySk: keySk,
-      keyPk: keyPk,
-      keySlug: keySlug,
-      commentText: commentText,
-      blurLabel: blurLabel,
+  Future<bool> updateComment(Comment comment) async {
+    final updateResult = await _api.updateComment(
+      keySk: comment.sk,
+      keyPk: comment.pk,
+      keySlug: comment.slug,
+      commentText: comment.commentText,
+      blurLabel: comment.blurLabel,
     );
-    final domainComment = updatedComment.toDomainModel;
-    await _localStorage.updateComment(keyPk.substring(5), domainComment.toCacheModel);
-    return domainComment;
+
+    if (updateResult) {
+      await _localStorage.updateComment(
+          comment.pk.substring(5), comment.toCacheModel);
+    }
+
+    return updateResult;
   }
 
   Future<String> uploadImage({
