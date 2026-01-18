@@ -87,7 +87,7 @@ class _FeedbackFormLauncher extends StatelessWidget {
 class _CurrentVersion extends StatelessWidget {
   const _CurrentVersion({super.key});
 
-  static const _version = 'R3P10';
+  static const _version = 'R3P11';
 
   @override
   Widget build(BuildContext context) {
