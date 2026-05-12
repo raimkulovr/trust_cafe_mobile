@@ -11,7 +11,12 @@ import '../text_editor_screen.dart';
 import '../typedefs.dart';
 import 'link_preview_editor.dart';
 
-const hideContentAvailableValues = ['Content Warning', 'NSFW', 'Spider', 'Spoiler'];
+const Map<String, String> blurLabels = {
+  'Content Warning': 'content_warning',
+  'NSFW': 'nsfw',
+  'Spider': 'spider',
+  'Spoiler': 'spoiler',
+};
 
 class PreviewStage extends StatelessWidget {
   const PreviewStage({
@@ -291,24 +296,31 @@ class _AdvancedOptionsState extends State<_AdvancedOptions> {
                                 ? null
                                 : (value) => context
                                 .read<TextEditorCubit>()
-                                .switchBlurLabel(value==null ? hideContentAvailableValues.first : null),
+                                .switchBlurLabel(value == null
+                                ? blurLabels[blurLabels.keys.first]
+                                : null),
                           ),
                           Expanded(
                               child: GestureDetector(
                                   onTap: state.processingImageUpload
                                       ? null
-                                      : () => context
-                                      .read<TextEditorCubit>()
-                                      .switchBlurLabel(state.blurLabel==null ? hideContentAvailableValues.first : null),
+                                      : () =>
+                                      context
+                                          .read<TextEditorCubit>()
+                                          .switchBlurLabel(
+                                          state.blurLabel == null
+                                              ? blurLabels[blurLabels.keys
+                                              .first]
+                                              : null),
                                   child: Text('Hide content')))
                         ],
                       ),
                       if(state.blurLabel!=null)
                         Column(
-                            children: hideContentAvailableValues.map((e) =>
+                            children: blurLabels.keys.map((e) =>
                                 RadioListTile.adaptive(
                                     title: Text(e),
-                                    value: e,
+                                    value: blurLabels[e],
                                     groupValue: state.blurLabel,
                                     onChanged: context.read<TextEditorCubit>().switchBlurLabel
                                 ),).toList()
