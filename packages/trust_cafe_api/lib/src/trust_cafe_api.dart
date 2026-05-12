@@ -447,6 +447,7 @@ class TrustCafeApi {
       'collaborative': collaborative,
       'postText': postText,
       'blurLabel': blurLabel,
+      'version': 2,
     };
 
     final response = await _dio.post(url, data: requestJsonBody);
