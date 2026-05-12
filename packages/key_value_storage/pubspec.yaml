@@ -12,6 +12,6 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^2.7.1
-  hive_ce_generator: 1.9.3
+  hive_ce_generator: 1.11.1
   flutter_lints: ^6.0.0
   test: ^1.26.2
