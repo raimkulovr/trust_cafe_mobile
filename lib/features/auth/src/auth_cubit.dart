@@ -19,27 +19,40 @@ class AuthCubit extends Cubit<AuthState> {
   final UserRepository _userRepository;
 
   String get authUrl => _userRepository.isApiChannelProduction()
-      ? 'https://www.trustcafe.io/en/auth'
-      : 'https://alpha.wts2.net/en/auth';
+      ? 'https://www.trustcafe.io/auth/login'
+      : 'https://alpha.wts2.net/auth/login';
 
- Future<void> authenticateUser() async {
-    final cookies = await cookieManager.getCookies(url: WebUri.uri(Uri.parse(authUrl)));
-    if(cookies.isEmpty) return;
+  Future<void> authenticateUser() async {
     try {
-      final userData = jsonDecode(cookies.firstWhere((e) => e.name == 'userprofile').value)
-          as Map<String, dynamic>;
-      final tokenData = <String, dynamic>{
-        'accessToken':
-            cookies.firstWhere((e) => e.name == 'accessToken').value,
-        'refreshToken':
-            cookies.firstWhere((e) => e.name == 'refreshToken').value,
-        'accessTimeOut':
-            int.tryParse(cookies.firstWhere((e) => e.name == 'accessTimeOut').value),
-      };
+      final cookies = await cookieManager.getCookies(
+          url: WebUri.uri(Uri.parse(authUrl)));
+
+      if (cookies.isEmpty) return;
+
+      final userDataCookie =
+          cookies
+              .firstWhere((e) => e.name == 'userData')
+              .value;
+
+      final tokenDataCookie =
+          cookies
+              .firstWhere((e) => e.name == 'tokenData')
+              .value;
+
+      final userData = jsonDecode(
+        Uri.decodeComponent(userDataCookie),
+      ) as Map<String, dynamic>;
+
+      final tokenData = jsonDecode(
+        Uri.decodeComponent(tokenDataCookie),
+      ) as Map<String, dynamic>;
+
       log('\n\nUSER DATA: $userData\nTOKEN DATA: $tokenData\n\n');
 
       await _userRepository.authenticateUser(
-          userData: userData, tokenData: tokenData);
+        userData: userData,
+        tokenData: tokenData,
+      );
 
       emit(state.copyWith(isLoggedIn: true));
     } catch (e){
@@ -53,12 +66,5 @@ class AuthCubit extends Cubit<AuthState> {
     await cookieManager.deleteAllCookies();
     return super.close();
   }
+
 }
-
-
-
-
-
-
-
-
