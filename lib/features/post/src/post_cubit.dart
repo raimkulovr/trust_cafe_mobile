@@ -33,9 +33,7 @@ class PostCubit extends Cubit<PostState> {
   {
     log('post cubit created: ${initialPost?.postId ?? postId}');
 
-    if(initialPost!=null){
-      _getReaction();
-    } else {
+    if (initialPost == null) {
       _loadPost(postId!);
     }
 
@@ -62,8 +60,6 @@ class PostCubit extends Cubit<PostState> {
         isBlurHidden: post.blurLabel!=null,
         isUpvoted: state.isUpvoted,
       ));
-
-      await _getReaction();
     } catch (error) {
       emit(PostState(
         post: Post.notFound,
@@ -73,21 +69,6 @@ class PostCubit extends Cubit<PostState> {
 
       rethrow;
     }
-  }
-
-  Future<void> _getReaction() async {
-    final post = state.post;
-    if(post.isEmpty || appUser.isGuest || post.statistics.reactions.isEmpty) return;
-
-    final cachedReaction = await _contentRepository.getCachedReaction(post.sk);
-    if(!isClosed) emit(state.copyWith(reaction: cachedReaction));
-
-    await Future.delayed(const Duration(seconds: 1, milliseconds: 500), () async {
-      if(!isClosed) {
-        final networkReaction = await _contentRepository.getNetworkReaction(post.sk);
-        if (!isClosed) emit(state.copyWith(reaction: networkReaction));
-      }
-    });
   }
 
   Future<void> refreshPost() async {
