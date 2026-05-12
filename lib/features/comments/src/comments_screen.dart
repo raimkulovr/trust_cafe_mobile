@@ -47,12 +47,23 @@ class CommentsScreen extends StatefulWidget {
     showDragHandle: true,
     isScrollControlled: true,
     builder: (context) {
-      return TcmBottomSheet(
-        child: CommentsScreen(
-          contentRepository: contentRepository,
-          userRepository: userRepository,
-          postData: CommentsPostData.fromPost(post),
-          scrollToSlug: scrollToSlug,
+      final mediaQuery = MediaQuery.of(context);
+
+      return Padding(
+        padding: EdgeInsets.only(
+          bottom: mediaQuery.viewInsets.bottom +
+              mediaQuery.padding.bottom,
+        ),
+        child: FractionallySizedBox(
+          heightFactor: 0.9,
+          child: TcmBottomSheet(
+            child: CommentsScreen(
+              contentRepository: contentRepository,
+              userRepository: userRepository,
+              postData: CommentsPostData.fromPost(post),
+              scrollToSlug: scrollToSlug,
+            ),
+          ),
         ),
       );
     },
