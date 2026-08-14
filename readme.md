@@ -3,6 +3,16 @@
   <img src="./docs/assets/tcm-banner.png" alt="TCM banner">
 </p>
 
+## Project retired
+
+According to [this post](https://www.trustcafe.io/post/1786640101-ef2b9e3e), a "decent mobile app" is already in the works, so I am retiring this project. I wish Simon and Fin the very best of luck with the new app.
+
+Even though I could rewrite the whole thing in a much better state within a few days on a personal Claude subscription (and probably within a day on the plan I use at work), it was great fun working on this app: reverse engineering the API (which I liked to call reconnaissance), finding a workaround to allow authorization, watching for feature requests and designing them, and many other things along the way.
+
+Sorry I never caught up with the functionality of the website, even though it stayed at roughly the same spot for the entire lifetime of the app.
+
+Thanks for giving it a try and for the valuable feedback.
+
 ## Overview
 Trust Cafe Mobile is a Flutter-based mobile client for the [Trust Cafe](https://www.trustcafe.io/en) platform, an aspiring social media network created to combat misinformation and foster community-led moderation. Dedicated to supporting meaningful discussions in a non-toxic, fact-based environment, this app was voluntarily developed to enhance user accessibility while introducing unique features not available on the website.
 
